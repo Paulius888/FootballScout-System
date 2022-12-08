@@ -5,9 +5,9 @@ namespace FootballScout.Data.Repositories
     public interface ILeaguesRepository
     {
         Task<League> Create(League league);
-        Task<League> Delete();
+        Task Delete(League league);
         Task<League> Get(int id);
         Task<IEnumerable<League>> GetAll();
-        Task<League> Put();
+        Task<League> Put(League league);
     }
 }

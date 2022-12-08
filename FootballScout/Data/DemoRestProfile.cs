@@ -10,6 +10,7 @@ namespace FootballScout.Data
         {
             CreateMap<League, LeagueDto>();
             CreateMap<CreateLeagueDto, League>();
+            CreateMap<UpdateLeagueDto, League>();
         }
     }
 }

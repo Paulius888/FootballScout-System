@@ -1,4 +1,5 @@
 ﻿using FootballScout.Data.Entities;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace FootballScout.Data.Repositories
 {
@@ -39,7 +40,7 @@ namespace FootballScout.Data.Repositories
             };
         }
 
-        public async Task<League> Put()
+        public async Task<League> Put(League league)
         {
             return new League()
             {
@@ -48,9 +49,8 @@ namespace FootballScout.Data.Repositories
             };
         }
 
-        public async Task<League> Delete()
+        public async Task Delete(League league)
         {
-            return new League();
         }
     }
 }

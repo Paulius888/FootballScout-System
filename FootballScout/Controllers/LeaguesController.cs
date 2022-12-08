@@ -43,5 +43,30 @@ namespace FootballScout.Controllers
 
             return Created($"/api/league/{league.Id}", _mapper.Map<LeagueDto>(league));
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<LeagueDto>> Put(int id, UpdateLeagueDto leagueDto)
+        {
+            var league = await _leaguesRepository.Get(id);
+            if (league == null) return NotFound($"League with id '{id}' not found");
+
+            _mapper.Map(leagueDto, league);
+
+            await _leaguesRepository.Put(league);
+
+            return Ok(_mapper.Map<LeagueDto>(league));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<LeagueDto>> Delete(int id)
+        {
+            var league = await _leaguesRepository.Get(id);
+            if (league == null) return NotFound($"League with id '{id}' not found");
+
+            await _leaguesRepository.Delete(league);
+
+            //204
+            return NoContent();
+        }
     }
 }
