@@ -33,5 +33,15 @@ namespace FootballScout.Controllers
 
             return Ok(_mapper.Map<LeagueDto>(league));
         }
+
+        [HttpPost]
+        public async Task<ActionResult<LeagueDto>> Post(CreateLeagueDto leagueDto)
+        {
+            var league = _mapper.Map<League>(leagueDto);
+
+            await _leaguesRepository.Create(league);
+
+            return Created($"/api/league/{league.Id}", _mapper.Map<LeagueDto>(league));
+        }
     }
 }

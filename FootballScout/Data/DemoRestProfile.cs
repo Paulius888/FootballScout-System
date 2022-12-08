@@ -9,6 +9,7 @@ namespace FootballScout.Data
         public DemoRestProfile() 
         {
             CreateMap<League, LeagueDto>();
+            CreateMap<CreateLeagueDto, League>();
         }
     }
 }

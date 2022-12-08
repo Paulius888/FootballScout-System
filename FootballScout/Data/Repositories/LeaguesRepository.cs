@@ -30,7 +30,7 @@ namespace FootballScout.Data.Repositories
             };
         }
 
-        public async Task<League> Create()
+        public async Task<League> Create(League league)
         {
             return new League()
             {
