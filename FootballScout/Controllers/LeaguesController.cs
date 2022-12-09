@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FootballScout.Data.Dtos.Leagues;
 using FootballScout.Data.Entities;
-using FootballScout.Data.Repositories;
+using FootballScout.Data.Repositories.Leagues;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballScout.Controllers

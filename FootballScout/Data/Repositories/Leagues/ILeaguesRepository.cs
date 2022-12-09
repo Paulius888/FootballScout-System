@@ -1,6 +1,6 @@
 ﻿using FootballScout.Data.Entities;
 
-namespace FootballScout.Data.Repositories
+namespace FootballScout.Data.Repositories.Leagues
 {
     public interface ILeaguesRepository
     {
