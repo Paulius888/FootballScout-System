@@ -1,5 +1,6 @@
 ﻿using FootballScout.Data.Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace FootballScout.Data.Repositories.Leagues
 {
@@ -12,31 +13,15 @@ namespace FootballScout.Data.Repositories.Leagues
         }
         public async Task<IEnumerable<League>> GetAll()
         {
-            return new List<League>
-            {
-                new League()
-                {
-                    Name = "Name",
-                    Nation = "Nation"
-                },
-                new League()
-                {
-                    Name = "Name",
-                    Nation = "Nation"
-                }
-            };
+            return await _databaseContext.League.ToListAsync();
         }
 
         public async Task<League> Get(int id)
         {
-            return new League()
-            {
-                Name = "Name",
-                Nation = "Nation"
-            };
+            return await _databaseContext.League.FirstOrDefaultAsync(o => o.Id == id);
         }
 
-        public async Task<League> Create(League league)
+        public async Task<League> Add(League league)
         {
             _databaseContext.League.Add(league);
             await _databaseContext.SaveChangesAsync();
@@ -44,17 +29,16 @@ namespace FootballScout.Data.Repositories.Leagues
             return league;
         }
 
-        public async Task<League> Put(League league)
+        public async Task Update(League league)
         {
-            return new League()
-            {
-                Name = "Name",
-                Nation = "Nation"
-            };
+            _databaseContext.League.Update(league);
+            await _databaseContext.SaveChangesAsync();
         }
 
-        public async Task Delete(League league)
+        public async Task Remove(League league)
         {
+            _databaseContext.League.Remove(league);
+            await _databaseContext.SaveChangesAsync();
         }
     }
 }

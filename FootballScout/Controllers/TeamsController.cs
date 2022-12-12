@@ -55,7 +55,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPut("{teamId}")]
-        public async Task<ActionResult<TeamDto>> Add(int leagueId, int teamId, UpdateTeamDto teamDto)
+        public async Task<ActionResult<TeamDto>> Put(int leagueId, int teamId, UpdateTeamDto teamDto)
         {
             var league = await _leaguesRepository.Get(leagueId);
             if (league == null) return NotFound($"Could not find a league with this id {leagueId}");

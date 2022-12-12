@@ -2,8 +2,5 @@
 
 namespace FootballScout.Data.Dtos.Leagues
 {
-    public class UpdateLeagueDto
-    {
-        public record CreateLeagueDto([Required] string Name);
-    }
+        public record UpdateLeagueDto([Required] string Name);
 }

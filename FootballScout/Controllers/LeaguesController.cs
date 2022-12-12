@@ -39,7 +39,7 @@ namespace FootballScout.Controllers
         {
             var league = _mapper.Map<League>(leagueDto);
 
-            await _leaguesRepository.Create(league);
+            await _leaguesRepository.Add(league);
 
             return Created($"/api/league/{league.Id}", _mapper.Map<LeagueDto>(league));
         }
@@ -52,7 +52,7 @@ namespace FootballScout.Controllers
 
             _mapper.Map(leagueDto, league);
 
-            await _leaguesRepository.Put(league);
+            await _leaguesRepository.Update(league);
 
             return Ok(_mapper.Map<LeagueDto>(league));
         }
@@ -63,7 +63,7 @@ namespace FootballScout.Controllers
             var league = await _leaguesRepository.Get(id);
             if (league == null) return NotFound($"League with id '{id}' not found");
 
-            await _leaguesRepository.Delete(league);
+            await _leaguesRepository.Remove(league);
 
             //204
             return NoContent();
