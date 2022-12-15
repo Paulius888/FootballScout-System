@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FootballScout.Data.Dtos.Leagues;
+using FootballScout.Data.Dtos.Players;
 using FootballScout.Data.Dtos.Teams;
 using FootballScout.Data.Entities;
 
@@ -16,6 +17,10 @@ namespace FootballScout.Data
             CreateMap<CreateTeamDto, Team>();
             CreateMap<UpdateTeamDto, Team>();
             CreateMap<Team, TeamDto>();
+
+            CreateMap<CreatePlayerDto, Player>();
+            CreateMap<UpdatePlayerDto, Player>();
+            CreateMap<Player, PlayerDto>();
         }
     }
 }

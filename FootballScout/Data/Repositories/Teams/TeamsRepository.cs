@@ -5,38 +5,38 @@ namespace FootballScout.Data.Repositories.Teams
 {
     public class TeamsRepository : ITeamsRepository
     {
-        private readonly DatabaseContext _databseContext;
+        private readonly DatabaseContext _databaseContext;
         public TeamsRepository(DatabaseContext databaseContext)
         {
-            _databseContext = databaseContext;
+            _databaseContext = databaseContext;
         }
 
         public async Task<List<Team>> GetAll(int leagueId)
         {
-            return await _databseContext.Team.Where(o => o.LeagueId == leagueId).ToListAsync();
+            return await _databaseContext.Team.Where(o => o.LeagueId == leagueId).ToListAsync();
         }
 
         public async Task<Team> Get(int leagueId, int teamId)
         {
-            return await _databseContext.Team.FirstOrDefaultAsync(o => o.LeagueId == leagueId && o.Id == teamId);
+            return await _databaseContext.Team.FirstOrDefaultAsync(o => o.LeagueId == leagueId && o.Id == teamId);
         }
 
         public async Task Add(Team team)
         {
-            _databseContext.Team.Add(team);
-            await _databseContext.SaveChangesAsync();
+            _databaseContext.Team.Add(team);
+            await _databaseContext.SaveChangesAsync();
         }
 
         public async Task Update(Team team)
         {
-            _databseContext.Team.Update(team);
-            await _databseContext.SaveChangesAsync();
+            _databaseContext.Team.Update(team);
+            await _databaseContext.SaveChangesAsync();
         }
 
         public async Task Remove(Team team)
         {
-            _databseContext.Team.Remove(team);
-            await _databseContext.SaveChangesAsync();
+            _databaseContext.Team.Remove(team);
+            await _databaseContext.SaveChangesAsync();
         }
     }
 }
