@@ -2,6 +2,7 @@
 using FootballScout.Data.Dtos.Leagues;
 using FootballScout.Data.Dtos.Players;
 using FootballScout.Data.Dtos.Teams;
+using FootballScout.Data.Dtos.Technicals;
 using FootballScout.Data.Entities;
 
 namespace FootballScout.Data
@@ -21,6 +22,10 @@ namespace FootballScout.Data
             CreateMap<CreatePlayerDto, Player>();
             CreateMap<UpdatePlayerDto, Player>();
             CreateMap<Player, PlayerDto>();
+
+            CreateMap<CreateTechnicalDto, Technical>();
+            CreateMap<UpdateTechnicalDto, Technical>();
+            CreateMap<Technical, TechnicalDto>();
         }
     }
 }

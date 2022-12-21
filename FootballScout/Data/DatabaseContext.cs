@@ -8,6 +8,7 @@ namespace FootballScout.Data
         public DbSet<League> League { get; set; }
         public DbSet<Team> Team { get; set; }
         public DbSet<Player> Player { get; set; }
+        public DbSet<Technical> Technical { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
