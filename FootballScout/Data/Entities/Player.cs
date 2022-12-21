@@ -17,5 +17,6 @@
         public Team Team { get; set; }
         public Technical Technical { get; set; }
         public Mental Mental { get; set; }
+        public Physical Physical { get; set; }
     }
 }

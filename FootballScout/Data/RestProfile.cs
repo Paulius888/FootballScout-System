@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FootballScout.Data.Dtos.Leagues;
 using FootballScout.Data.Dtos.Mentals;
+using FootballScout.Data.Dtos.Physicals;
 using FootballScout.Data.Dtos.Players;
 using FootballScout.Data.Dtos.Teams;
 using FootballScout.Data.Dtos.Technicals;
@@ -31,6 +32,10 @@ namespace FootballScout.Data
             CreateMap<CreateMentalDto, Mental>();
             CreateMap<UpdateMentalDto, Mental>();
             CreateMap<Mental, MentalDto>();
+
+            CreateMap<CreatePhysicalDto, Physical>();
+            CreateMap<UpdatePhysicalDto, Physical>();
+            CreateMap<Physical, PhysicalDto>();
         }
     }
 }
