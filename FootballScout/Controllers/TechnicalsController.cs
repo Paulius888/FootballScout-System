@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FootballScout.Data.Dtos.Players;
 using FootballScout.Data.Dtos.Technicals;
 using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.Leagues;

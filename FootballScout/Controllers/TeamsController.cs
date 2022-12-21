@@ -4,7 +4,6 @@ using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.Leagues;
 using FootballScout.Data.Repositories.Teams;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 
 namespace FootballScout.Controllers
 {

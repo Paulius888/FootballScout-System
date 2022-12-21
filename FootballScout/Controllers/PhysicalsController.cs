@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using FootballScout.Data.Dtos.Mentals;
 using FootballScout.Data.Dtos.Physicals;
 using FootballScout.Data.Entities;
-using FootballScout.Data.Repositories.Mentals;
 using FootballScout.Data.Repositories.Physicals;
 using FootballScout.Data.Repositories.Players;
 using Microsoft.AspNetCore.Mvc;

@@ -18,5 +18,6 @@
         public Technical Technical { get; set; }
         public Mental Mental { get; set; }
         public Physical Physical { get; set; }
+        public Goalkeeping Goalkeeping { get; set; }
     }
 }

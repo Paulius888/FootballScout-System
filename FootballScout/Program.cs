@@ -1,4 +1,5 @@
 using FootballScout.Data;
+using FootballScout.Data.Repositories.GoalKeeping;
 using FootballScout.Data.Repositories.Leagues;
 using FootballScout.Data.Repositories.Mentals;
 using FootballScout.Data.Repositories.Physicals;
@@ -19,6 +20,7 @@ builder.Services.AddTransient<IPlayersRepository, PlayersRepository>();
 builder.Services.AddTransient<ITechnicalsRepository, TechnicalsRepository>();
 builder.Services.AddTransient<IMentalsRepository, MentalsRepository>();
 builder.Services.AddTransient<IPhysicalsRepository, PhysicalsRepository>();
+builder.Services.AddTransient<IGoalKeepingRepository, GoalKeepingRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

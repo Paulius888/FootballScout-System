@@ -11,6 +11,7 @@ namespace FootballScout.Data
         public DbSet<Technical> Technical { get; set; }
         public DbSet<Mental> Mental { get; set; }
         public DbSet<Physical> Physical { get; set; }
+        public DbSet<Goalkeeping> Goalkeeping { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
