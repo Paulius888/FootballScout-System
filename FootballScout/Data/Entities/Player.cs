@@ -16,5 +16,6 @@
         public int TeamId { get; set; }
         public Team Team { get; set; }
         public Technical Technical { get; set; }
+        public Mental Mental { get; set; }
     }
 }
