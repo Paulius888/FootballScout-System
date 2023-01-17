@@ -11,6 +11,11 @@ namespace FootballScout.Data.Repositories.Teams
             _databaseContext = databaseContext;
         }
 
+        public async Task<List<Team>> GetAllTeams()
+        {
+            return await _databaseContext.Team.ToListAsync();
+        }
+
         public async Task<List<Team>> GetAll(int leagueId)
         {
             return await _databaseContext.Team.Where(o => o.LeagueId == leagueId).ToListAsync();

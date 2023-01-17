@@ -21,6 +21,7 @@ namespace FootballScout.Data
             CreateMap<CreateTeamDto, Team>();
             CreateMap<UpdateTeamDto, Team>();
             CreateMap<Team, TeamDto>();
+            CreateMap<Team, AllTeamsDto>();
 
             CreateMap<CreatePlayerDto, Player>();
             CreateMap<UpdatePlayerDto, Player>();
