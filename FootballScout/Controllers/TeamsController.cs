@@ -47,6 +47,7 @@ namespace FootballScout.Controllers
 
             var team = _mapper.Map<Team>(teamDto);
             team.LeagueId = leagueId;
+            team.League_Name = league.Name;
 
             await _teamsRepository.Add(team);
 
