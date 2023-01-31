@@ -6,13 +6,15 @@ using FootballScout.Data.Repositories.Physicals;
 using FootballScout.Data.Repositories.Players;
 using FootballScout.Data.Repositories.Teams;
 using FootballScout.Data.Repositories.Technicals;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddDbContext<DatabaseContext>(
+    o => o.UseNpgsql(builder.Configuration.GetConnectionString("NewFmDb")));
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddTransient<ILeaguesRepository, LeaguesRepository>();
 builder.Services.AddTransient<ITeamsRepository, TeamsRepository>();
