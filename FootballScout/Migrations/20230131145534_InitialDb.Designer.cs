@@ -3,43 +3,101 @@ using System;
 using FootballScout.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace FootballScout.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221221185701_Physicals")]
-    partial class Physicals
+    [Migration("20230131145534_InitialDb")]
+    partial class InitialDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
+
+            modelBuilder.Entity("FootballScout.Data.Entities.Goalkeeping", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AerialReach")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CommandOfArea")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Communication")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Eccentricity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("FirstTouch")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Handling")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Kicking")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OneOnOnes")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Passing")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Punching")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Reflexes")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RushingOut")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Throwing")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId")
+                        .IsUnique();
+
+                    b.ToTable("Goalkeeping");
+                });
 
             modelBuilder.Entity("FootballScout.Data.Entities.League", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Nation")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -50,54 +108,54 @@ namespace FootballScout.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Aggression")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Anticipation")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Bravery")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Composure")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Concentration")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Decisions")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Determination")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Flair")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Leadership")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("OffTheBall")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("PlayerId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Positioning")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Teamwork")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Vision")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("WorkRate")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -111,36 +169,36 @@ namespace FootballScout.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Acceleration")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Agility")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Balance")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("JumpingReach")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("NaturalFitness")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Pace")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("PlayerId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Stamina")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Strength")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -154,43 +212,48 @@ namespace FootballScout.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Age")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Contract")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("CurrentAbility")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsEuCitizen")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsGoalKeeper")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
-                    b.Property<int>("Personality")
-                        .HasColumnType("int");
+                    b.Property<string>("Personality")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("PotentialAbility")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Price")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("TeamId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Team_Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("Wage")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -203,24 +266,28 @@ namespace FootballScout.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<int>("LeagueId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<string>("League_Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Training_Facilities")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Youth_Facilities")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -233,54 +300,54 @@ namespace FootballScout.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Corners")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Crossing")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Dribbling")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Finishing")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("FirstTouch")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("FreeKickTaking")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Heading")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("LongShots")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("LongThrows")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Marking")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Passing")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("PenaltyTaking")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("PlayerId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Tackling")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Technique")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -288,6 +355,17 @@ namespace FootballScout.Migrations
                         .IsUnique();
 
                     b.ToTable("Technical");
+                });
+
+            modelBuilder.Entity("FootballScout.Data.Entities.Goalkeeping", b =>
+                {
+                    b.HasOne("FootballScout.Data.Entities.Player", "Player")
+                        .WithOne("Goalkeeping")
+                        .HasForeignKey("FootballScout.Data.Entities.Goalkeeping", "PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("FootballScout.Data.Entities.Mental", b =>
@@ -347,6 +425,9 @@ namespace FootballScout.Migrations
 
             modelBuilder.Entity("FootballScout.Data.Entities.Player", b =>
                 {
+                    b.Navigation("Goalkeeping")
+                        .IsRequired();
+
                     b.Navigation("Mental")
                         .IsRequired();
 

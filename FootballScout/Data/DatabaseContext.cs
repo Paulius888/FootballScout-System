@@ -5,6 +5,7 @@ namespace FootballScout.Data
 {
     public class DatabaseContext : DbContext
     {
+        public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options) { }
         public DbSet<League> League { get; set; }
         public DbSet<Team> Team { get; set; }
         public DbSet<Player> Player { get; set; }
@@ -13,9 +14,9 @@ namespace FootballScout.Data
         public DbSet<Physical> Physical { get; set; }
         public DbSet<Goalkeeping> Goalkeeping { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnModelCreating(ModelBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=FootballDB");
+            optionsBuilder.UseSerialColumns();
         }
     }
 }
