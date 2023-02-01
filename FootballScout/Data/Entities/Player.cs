@@ -13,6 +13,7 @@
         public bool IsGoalKeeper { get; set; }
         public bool IsEuCitizen { get; set; }
         public string Personality { get; set; } 
+        public string[] Role { get;set; }
         public string Team_Name { get; set; }
         public int TeamId { get; set; }
         public Team Team { get; set; }
