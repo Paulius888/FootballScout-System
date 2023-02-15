@@ -2,6 +2,10 @@
 using FootballScout.Data.Dtos.Leagues;
 using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.Leagues;
+using FootballScout.Filter;
+using FootballScout.Helpers;
+using FootballScout.Services;
+using FootballScout.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballScout.Controllers
@@ -12,17 +16,26 @@ namespace FootballScout.Controllers
     {
         private readonly ILeaguesRepository _leaguesRepository;
         private readonly IMapper _mapper;
+        private readonly IUriService uriService;
 
-        public LeaguesController(ILeaguesRepository leaguesRepository, IMapper mapper)
+        public LeaguesController(ILeaguesRepository leaguesRepository, IMapper mapper, IUriService uriService)
         {
             _leaguesRepository = leaguesRepository;
             _mapper = mapper;
+            this.uriService = uriService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<LeagueDto>> GetAll()
+        public async Task<ActionResult<LeagueDto>> GetAll([FromQuery] PaginationFilter filter)
         {
-            return (await _leaguesRepository.GetAll()).Select(o => _mapper.Map<LeagueDto>(o));
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var league = await _leaguesRepository.GetAll(filter);
+            var leagueResponse = _mapper.Map<IEnumerable<LeagueDto>>(league);
+            var totalRecords = await _leaguesRepository.TotalCount();
+            var pagedResponse = PaginationHelper.CreatePagedReponse<LeagueDto>(leagueResponse, validFilter, totalRecords, uriService, route);
+            return Ok(pagedResponse);
+
         }
 
         [HttpGet("{id}")]
@@ -31,7 +44,7 @@ namespace FootballScout.Controllers
             var league = await _leaguesRepository.Get(id);
             if (league == null) return NotFound($"League'{id}' not found");
 
-            return Ok(_mapper.Map<LeagueDto>(league));
+            return Ok(new Response<LeagueDto>(_mapper.Map<LeagueDto>(league)));
         }
 
         [HttpPost]
@@ -41,7 +54,7 @@ namespace FootballScout.Controllers
 
             await _leaguesRepository.Add(league);
 
-            return Created($"/api/league/{league.Id}", _mapper.Map<LeagueDto>(league));
+            return Created($"/api/league/{league.Id}", new Response<LeagueDto>(_mapper.Map<LeagueDto>(league)));
         }
 
         [HttpPut("{id}")]
@@ -54,7 +67,7 @@ namespace FootballScout.Controllers
 
             await _leaguesRepository.Update(league);
 
-            return Ok(_mapper.Map<LeagueDto>(league));
+            return Ok(new Response<LeagueDto>(_mapper.Map<LeagueDto>(league)));
         }
 
         [HttpDelete("{id}")]

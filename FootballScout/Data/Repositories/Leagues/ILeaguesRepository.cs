@@ -1,4 +1,5 @@
 ﻿using FootballScout.Data.Entities;
+using FootballScout.Filter;
 
 namespace FootballScout.Data.Repositories.Leagues
 {
@@ -7,7 +8,8 @@ namespace FootballScout.Data.Repositories.Leagues
         Task<League> Add(League league);
         Task Remove(League league);
         Task<League> Get(int id);
-        Task<IEnumerable<League>> GetAll();
+        Task<int> TotalCount();
+        Task<IEnumerable<League>> GetAll(PaginationFilter filter);
         Task Update(League league);
     }
 }

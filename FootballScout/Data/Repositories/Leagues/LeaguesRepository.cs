@@ -1,4 +1,5 @@
 ﻿using FootballScout.Data.Entities;
+using FootballScout.Filter;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +12,19 @@ namespace FootballScout.Data.Repositories.Leagues
         {
             _databaseContext = databaseContext;
         }
-        public async Task<IEnumerable<League>> GetAll()
+        public async Task<IEnumerable<League>> GetAll(PaginationFilter filter)
         {
-            return await _databaseContext.League.ToListAsync();
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            return await _databaseContext.League
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToListAsync();
+        }
+
+        public async Task<int> TotalCount()
+        {
+            var totalCount = await _databaseContext.League.CountAsync();
+            return totalCount;
         }
 
         public async Task<League> Get(int id)
