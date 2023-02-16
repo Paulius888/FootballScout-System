@@ -26,13 +26,13 @@ namespace FootballScout.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<LeagueDto>> GetAll([FromQuery] PaginationFilter filter)
+        public async Task<ActionResult<LeagueDto>> GetAll([FromQuery] PaginationFilter filter, [FromQuery] string? query = null)
         {
             var route = Request.Path.Value;
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            var league = await _leaguesRepository.GetAll(filter);
+            var league = await _leaguesRepository.GetAll(filter, query);
             var leagueResponse = _mapper.Map<IEnumerable<LeagueDto>>(league);
-            var totalRecords = await _leaguesRepository.TotalCount();
+            var totalRecords = await _leaguesRepository.TotalCount(query);
             var pagedResponse = PaginationHelper.CreatePagedReponse<LeagueDto>(leagueResponse, validFilter, totalRecords, uriService, route);
             return Ok(pagedResponse);
 

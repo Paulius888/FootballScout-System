@@ -12,18 +12,31 @@ namespace FootballScout.Data.Repositories.Leagues
         {
             _databaseContext = databaseContext;
         }
-        public async Task<IEnumerable<League>> GetAll(PaginationFilter filter)
+        public async Task<IEnumerable<League>> GetAll(PaginationFilter filter, string query = null)
         {
+            var queryable = _databaseContext.League.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                queryable = queryable.Where(x => x.Name.Contains(query) || x.Nation.Contains(query));
+            }
+
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            return await _databaseContext.League
+            return await queryable
                 .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize)
                 .ToListAsync();
         }
 
-        public async Task<int> TotalCount()
+        public async Task<int> TotalCount(string query = null)
         {
-            var totalCount = await _databaseContext.League.CountAsync();
+            var queryable = _databaseContext.League.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                queryable = queryable.Where(x => x.Name.Contains(query) || x.Nation.Contains(query));
+            }
+            int totalCount = queryable.Count();
             return totalCount;
         }
 
