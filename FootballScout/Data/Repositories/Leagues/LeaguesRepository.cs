@@ -14,12 +14,7 @@ namespace FootballScout.Data.Repositories.Leagues
         }
         public async Task<IEnumerable<League>> GetAll(PaginationFilter filter, string query = null)
         {
-            var queryable = _databaseContext.League.AsQueryable();
-
-            if (!string.IsNullOrEmpty(query))
-            {
-                queryable = queryable.Where(x => x.Name.Contains(query) || x.Nation.Contains(query));
-            }
+            var queryable = Search(query);
 
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
             return await queryable
@@ -30,12 +25,7 @@ namespace FootballScout.Data.Repositories.Leagues
 
         public async Task<int> TotalCount(string query = null)
         {
-            var queryable = _databaseContext.League.AsQueryable();
-
-            if (!string.IsNullOrEmpty(query))
-            {
-                queryable = queryable.Where(x => x.Name.Contains(query) || x.Nation.Contains(query));
-            }
+            var queryable = Search(query);
             int totalCount = queryable.Count();
             return totalCount;
         }
@@ -63,6 +53,19 @@ namespace FootballScout.Data.Repositories.Leagues
         {
             _databaseContext.League.Remove(league);
             await _databaseContext.SaveChangesAsync();
+        }
+
+        private IQueryable<League> Search (string query)
+        {
+            var queryable = _databaseContext.League.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(query) || x.Nation.ToLower().Contains(query)
+                || x.Name.Contains(query) || x.Nation.Contains(query));
+            }
+
+            return queryable;
         }
     }
 }
