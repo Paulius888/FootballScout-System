@@ -1,4 +1,5 @@
 ﻿using FootballScout.Data.Entities;
+using FootballScout.Filter;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootballScout.Data.Repositories.Teams
@@ -11,9 +12,22 @@ namespace FootballScout.Data.Repositories.Teams
             _databaseContext = databaseContext;
         }
 
-        public async Task<List<Team>> GetAllTeams()
+        public async Task<List<Team>> GetAllTeams(PaginationFilter filter, string query = null)
         {
-            return await _databaseContext.Team.ToListAsync();
+            var queryable = Search(query);
+
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            return await queryable
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToListAsync();
+        }
+
+        public async Task<int> TotalCount(string query = null)
+        {
+            var queryable = Search(query);
+            int totalCount = queryable.Count();
+            return totalCount;
         }
 
         public async Task<List<Team>> GetAll(int leagueId)
@@ -42,6 +56,20 @@ namespace FootballScout.Data.Repositories.Teams
         {
             _databaseContext.Team.Remove(team);
             await _databaseContext.SaveChangesAsync();
+        }
+
+        private IQueryable<Team> Search(string query)
+        {
+            var queryable = _databaseContext.Team.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(query) || x.Name.Contains(query)
+                || x.Training_Facilities.ToLower().Contains(query) || x.Training_Facilities.Contains(query)
+                || x.Youth_Facilities.ToLower().Contains(query) || x.Youth_Facilities.Contains(query));
+            }
+
+            return queryable;
         }
     }
 }
