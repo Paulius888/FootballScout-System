@@ -7,9 +7,10 @@ namespace FootballScout.Data.Repositories.Teams
     {
         Task<List<Team>> GetAllTeams(PaginationFilter filter, string query = null);
         Task<int> TotalCount(string query = null);
+        Task<int> TotalCount(int leagueId, string query = null);
         Task Add(Team team);
         Task<Team> Get(int leagueId, int teamId);
-        Task<List<Team>> GetAll(int leagueId);
+        Task<List<Team>> GetAll(int leagueId, PaginationFilter filter, string query = null);
         Task Remove(Team team);
         Task Update(Team team);
     }

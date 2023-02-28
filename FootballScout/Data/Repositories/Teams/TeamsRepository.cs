@@ -30,9 +30,21 @@ namespace FootballScout.Data.Repositories.Teams
             return totalCount;
         }
 
-        public async Task<List<Team>> GetAll(int leagueId)
+        public async Task<int> TotalCount(int leagueId, string query = null)
         {
-            return await _databaseContext.Team.Where(o => o.LeagueId == leagueId).ToListAsync();
+            var queryable = Search(query);
+            int totalCount = queryable.Where(o => o.LeagueId == leagueId).Count();
+            return totalCount;
+        }
+
+        public async Task<List<Team>> GetAll(int leagueId, PaginationFilter filter, string query = null)
+        {
+            var queryable = Search(query);
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            return await queryable.Where(o => o.LeagueId == leagueId)
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToListAsync();
         }
 
         public async Task<Team> Get(int leagueId, int teamId)
