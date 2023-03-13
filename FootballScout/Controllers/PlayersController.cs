@@ -61,6 +61,7 @@ namespace FootballScout.Controllers
             if (team == null) return NotFound($"Could not find a team with this id {teamId}");
 
             var player = _mapper.Map<Player>(playerDto);
+            player.LeagueId = leagueId;
             player.TeamId = teamId;
             player.Team_Name = team.Name;
 
