@@ -1,9 +1,14 @@
 ﻿using AutoMapper;
 using FootballScout.Data.Dtos.Players;
+using FootballScout.Data.Dtos.Teams;
 using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.Leagues;
 using FootballScout.Data.Repositories.Players;
 using FootballScout.Data.Repositories.Teams;
+using FootballScout.Filter;
+using FootballScout.Helpers;
+using FootballScout.Services;
+using FootballScout.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballScout.Controllers
@@ -16,20 +21,27 @@ namespace FootballScout.Controllers
         private readonly ITeamsRepository _teamsRepository;
         private readonly ILeaguesRepository _leaguesRepository;
         private readonly IMapper _mapper;
+        private readonly IUriService uriService;
 
-        public PlayersController(IPlayersRepository playersRepository, ITeamsRepository teamsRepository, IMapper mapper, ILeaguesRepository leaguesRepository)
+        public PlayersController(IPlayersRepository playersRepository, ITeamsRepository teamsRepository, IMapper mapper, ILeaguesRepository leaguesRepository, IUriService uriService)
         {
             _teamsRepository = teamsRepository;
             _mapper = mapper;
             _leaguesRepository = leaguesRepository;
             _playersRepository = playersRepository;
+            this.uriService = uriService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<PlayerDto>> GetAll(int teamId)
+        public async Task<ActionResult<PlayerDto>> GetAll(int teamId, [FromQuery] PaginationFilter filter, [FromQuery] string? query = null)
         {
-            var players = await _playersRepository.GetAll(teamId);
-            return players.Select(o => _mapper.Map<PlayerDto>(o));
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var player = await _playersRepository.GetAll(teamId, filter, query);
+            var teamResponse = _mapper.Map<IList<PlayerDto>>(player);
+            var totalRecords = await _playersRepository.TotalCount(teamId, query);
+            var pagedResponse = PaginationHelper.CreatePagedReponse<PlayerDto>(teamResponse, validFilter, totalRecords, uriService, route);
+            return Ok(pagedResponse);
         }
 
         [HttpGet("{playerId}")]
@@ -39,7 +51,7 @@ namespace FootballScout.Controllers
 
             if (player == null) return NotFound();
 
-            return Ok(_mapper.Map<PlayerDto>(player));
+            return Ok(new Response<PlayerDto>(_mapper.Map<PlayerDto>(player)));
         }
 
         [HttpPost]
@@ -54,7 +66,7 @@ namespace FootballScout.Controllers
 
             await _playersRepository.Add(player);
 
-            return Created($"/api/leagues/{leagueId}/teams/{team.Id}/players/{player.Id}", _mapper.Map<PlayerDto>(player));
+            return Created($"/api/leagues/{leagueId}/teams/{team.Id}/players/{player.Id}", new Response<PlayerDto>(_mapper.Map<PlayerDto>(player)));
         }
 
         [HttpPut("{playerId}")]
@@ -70,7 +82,7 @@ namespace FootballScout.Controllers
 
             await _playersRepository.Update(oldPlayer);
 
-            return Ok(_mapper.Map<PlayerDto>(oldPlayer));
+            return Ok(new Response<PlayerDto>(_mapper.Map<PlayerDto>(oldPlayer)));
         }
 
         [HttpDelete("{playerId}")]

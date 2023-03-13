@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FootballScout.Controllers
 {
     [ApiController]
-    [Route("api/leagues/{leagueId}/teams/{teamId}/players/{playerId}/technicals")]
+    [Route("api/teams/{teamId}/players/{playerId}/technicals")]
     public class TechnicalsController : ControllerBase
     {
         private readonly IPlayersRepository _playersRepository;
@@ -43,7 +43,7 @@ namespace FootballScout.Controllers
 
             await _technicalsRepository.Add(technical);
 
-            return Created($"/api/leagues/{leagueId}/teams/{teamId}/players/{player.Id}/technicals", _mapper.Map<TechnicalDto>(technical));
+            return Created($"/api/teams/{teamId}/players/{player.Id}/technicals", _mapper.Map<TechnicalDto>(technical));
         }
 
         [HttpPut("{technicalId}")]

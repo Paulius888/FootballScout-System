@@ -1,4 +1,5 @@
 ﻿using FootballScout.Data.Entities;
+using FootballScout.Filter;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootballScout.Data.Repositories.Players
@@ -12,14 +13,38 @@ namespace FootballScout.Data.Repositories.Players
             _databaseContext = databaseContext;
         }
 
-        public async Task<List<Player>> GetAllPlayers()
+        public async Task<List<Player>> GetAllPlayers(PaginationFilter filter, string query = null)
         {
-            return await _databaseContext.Player.ToListAsync();
+            var queryable = Search(query);
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            return await queryable
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToListAsync();
         }
 
-        public async Task<List<Player>> GetAll(int teamId)
+        public async Task<int> TotalCount(string query = null)
         {
-            return await _databaseContext.Player.Where(o => o.TeamId == teamId).ToListAsync();
+            var queryable = Search(query);
+            int totalCount = queryable.Count();
+            return totalCount;
+        }
+
+        public async Task<int> TotalCount(int teamId, string query = null)
+        {
+            var queryable = Search(query);
+            int totalCount = queryable.Where(o => o.TeamId == teamId).Count();
+            return totalCount;
+        }
+
+        public async Task<List<Player>> GetAll(int teamId, PaginationFilter filter, string query = null)
+        {
+            var queryable = Search(query);
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            return await queryable.Where(o => o.TeamId == teamId)
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToListAsync();
         }
 
         public async Task<Player> Get(int teamId, int playerId)
@@ -43,6 +68,23 @@ namespace FootballScout.Data.Repositories.Players
         {
             _databaseContext.Player.Remove(player);
             await _databaseContext.SaveChangesAsync();
+        }
+
+        private IQueryable<Player> Search(string query)
+        {
+            var queryable = _databaseContext.Player.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(query) || x.Name.Contains(query)
+                || x.Personality.ToLower().Contains(query) || x.Personality.Contains(query)
+                || x.Team_Name.ToLower().Contains(query) || x.Team_Name.Contains(query)
+                || x.Role.Contains(query) || x.Age.ToString().Contains(query)
+                || x.Wage.ToString().Contains(query) || x.Price.ToString().Contains(query)
+                || x.CurrentAbility.ToString().Contains(query) || x.PotentialAbility.ToString().Contains(query));
+            }
+
+            return queryable;
         }
     }
 }

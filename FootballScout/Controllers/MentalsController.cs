@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FootballScout.Controllers
 {
     [ApiController]
-    [Route("api/leagues/{leagueId}/teams/{teamId}/players/{playerId}/mentals")]
+    [Route("api/teams/{teamId}/players/{playerId}/mentals")]
     public class MentalsController : ControllerBase
     {
         private readonly IPlayersRepository _playersRepository;
@@ -44,7 +44,7 @@ namespace FootballScout.Controllers
 
             await _mentalsRepository.Add(mental);
 
-            return Created($"/api/leagues/{leagueId}/teams/{teamId}/players/{player.Id}/mentals", _mapper.Map<MentalDto>(mental));
+            return Created($"/api/teams/{teamId}/players/{player.Id}/mentals", _mapper.Map<MentalDto>(mental));
         }
 
         [HttpPut("{mentalId}")]

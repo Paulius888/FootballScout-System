@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FootballScout.Controllers
 {
     [ApiController]
-    [Route("api/leagues/{leagueId}/teams/{teamId}/players/{playerId}/goalkeeping")]
+    [Route("api/teams/{teamId}/players/{playerId}/goalkeeping")]
     public class GoalkeepingController : ControllerBase
     {
         private readonly IPlayersRepository _playersRepository;
@@ -41,7 +41,7 @@ namespace FootballScout.Controllers
 
             await _goalkeepingRepository.Add(goalkeeping);
 
-            return Created($"/api/leagues/{leagueId}/teams/{teamId}/players/{player.Id}/goalkeeping", _mapper.Map<GoalkeepingDto>(goalkeeping));
+            return Created($"/api/teams/{teamId}/players/{player.Id}/goalkeeping", _mapper.Map<GoalkeepingDto>(goalkeeping));
         }
 
         [HttpPut("{goalkeepingId}")]

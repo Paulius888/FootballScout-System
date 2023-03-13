@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FootballScout.Controllers
 {
     [ApiController]
-    [Route("api/leagues/{leagueId}/teams/{teamId}/players/{playerId}/physicals")]
+    [Route("api/teams/{teamId}/players/{playerId}/physicals")]
     public class PhysicalsController : ControllerBase
     {
         private readonly IPlayersRepository _playersRepository;
@@ -41,7 +41,7 @@ namespace FootballScout.Controllers
 
             await _physicalsRepository.Add(physical);
 
-            return Created($"/api/leagues/{leagueId}/teams/{teamId}/players/{player.Id}/physicals", _mapper.Map<PhysicalDto>(physical));
+            return Created($"/api/teams/{teamId}/players/{player.Id}/physicals", _mapper.Map<PhysicalDto>(physical));
         }
 
         [HttpPut("{physicalId}")]
