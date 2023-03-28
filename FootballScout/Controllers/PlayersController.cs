@@ -44,16 +44,6 @@ namespace FootballScout.Controllers
             return Ok(pagedResponse);
         }
 
-        [HttpGet("{playerId}")]
-        public async Task<ActionResult<PlayerDto>> Get(int teamId, int playerId)
-        {
-            var player = await _playersRepository.Get(teamId, playerId);
-
-            if (player == null) return NotFound();
-
-            return Ok(new Response<PlayerDto>(_mapper.Map<PlayerDto>(player)));
-        }
-
         [HttpPost]
         public async Task<ActionResult<PlayerDto>> Add(int leagueId, int teamId, CreatePlayerDto playerDto)
         {
@@ -76,7 +66,7 @@ namespace FootballScout.Controllers
             var team = await _teamsRepository.Get(leagueId, teamId);
             if (team == null) return NotFound($"Could not find a team with this id {teamId}");
 
-            var oldPlayer = await _playersRepository.Get(teamId, playerId);
+            var oldPlayer = await _playersRepository.Get( playerId);
             if (oldPlayer == null) return NotFound();
 
             _mapper.Map(playerDto, oldPlayer);
@@ -89,7 +79,7 @@ namespace FootballScout.Controllers
         [HttpDelete("{playerId}")]
         public async Task<ActionResult> Delete(int teamId, int playerId)
         {
-            var player = await _playersRepository.Get(teamId, playerId);
+            var player = await _playersRepository.Get( playerId);
             if (player == null) return NotFound();
 
             await _playersRepository.Remove(player);

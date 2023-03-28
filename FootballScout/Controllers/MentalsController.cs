@@ -36,7 +36,7 @@ namespace FootballScout.Controllers
         [HttpPost]
         public async Task<ActionResult<MentalDto>> Add(int leagueId, int teamId, int playerId, CreateMentalDto mentalDto)
         {
-            var player = await _playersRepository.Get(teamId, playerId);
+            var player = await _playersRepository.Get(playerId);
             if (player == null) return NotFound($"Could not find a player with this id {playerId}");
 
             var mental = _mapper.Map<Mental>(mentalDto);
@@ -50,7 +50,7 @@ namespace FootballScout.Controllers
         [HttpPut("{mentalId}")]
         public async Task<ActionResult<MentalDto>> Put(int leagueId, int teamId, int playerId, int mentalId, UpdateMentalDto mentalDto)
         {
-            var player = await _playersRepository.Get(teamId, playerId);
+            var player = await _playersRepository.Get(playerId);
             if (player == null) return NotFound($"Could not find a player with this id {playerId}");
 
             var oldMental = await _mentalsRepository.Get(playerId, mentalId);

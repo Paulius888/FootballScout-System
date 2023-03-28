@@ -23,6 +23,28 @@ namespace FootballScout.Data.Repositories.Players
                 .ToListAsync();
         }
 
+        public async Task<List<Player>> GetAllFieldPlayers(PaginationFilter filter, string query = null)
+        {
+            var queryable = SearchName(query);
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            return await queryable
+                .Where(o => o.IsGoalKeeper == false)
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToListAsync();
+        }
+
+        public async Task<List<Player>> GetAllGoalKeepingPlayers(PaginationFilter filter, string query = null)
+        {
+            var queryable = SearchName(query);
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            return await queryable
+                .Where(o => o.IsGoalKeeper == true)
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToListAsync();
+        }
+
         public async Task<int> TotalCount(string query = null)
         {
             var queryable = Search(query);
@@ -47,9 +69,9 @@ namespace FootballScout.Data.Repositories.Players
                 .ToListAsync();
         }
 
-        public async Task<Player> Get(int teamId, int playerId)
+        public async Task<Player> Get(int playerId)
         {
-            return await _databaseContext.Player.FirstOrDefaultAsync(o => o.TeamId == teamId && o.Id == playerId);
+            return await _databaseContext.Player.FirstOrDefaultAsync(o => o.Id == playerId);
         }
 
         public async Task Add(Player player)
@@ -82,6 +104,18 @@ namespace FootballScout.Data.Repositories.Players
                 || x.Role.Contains(query) || x.Age.ToString().Contains(query)
                 || x.Wage.ToString().Contains(query) || x.Price.ToString().Contains(query)
                 || x.CurrentAbility.ToString().Contains(query) || x.PotentialAbility.ToString().Contains(query));
+            }
+
+            return queryable;
+        }
+
+        private IQueryable<Player> SearchName(string query)
+        {
+            var queryable = _databaseContext.Player.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(query) || x.Name.Contains(query));
             }
 
             return queryable;

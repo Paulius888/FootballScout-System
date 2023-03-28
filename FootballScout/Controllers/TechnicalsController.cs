@@ -35,7 +35,7 @@ namespace FootballScout.Controllers
         [HttpPost]
         public async Task<ActionResult<TechnicalDto>> Add(int leagueId, int teamId, int playerId, CreateTechnicalDto technicalDto)
         {
-            var player = await _playersRepository.Get(teamId, playerId);
+            var player = await _playersRepository.Get(playerId);
             if (player == null) return NotFound($"Could not find a player with this id {playerId}");
 
             var technical = _mapper.Map<Technical>(technicalDto);
@@ -49,7 +49,7 @@ namespace FootballScout.Controllers
         [HttpPut("{technicalId}")]
         public async Task<ActionResult<TechnicalDto>> Put(int leagueId, int teamId, int playerId, int technicalId, UpdateTechnicalDto technicalDto)
         {
-            var player = await _playersRepository.Get(teamId, playerId);
+            var player = await _playersRepository.Get(playerId);
             if (player == null) return NotFound($"Could not find a player with this id {playerId}");
 
             var oldTechnical = await _technicalsRepository.Get(playerId, technicalId);
