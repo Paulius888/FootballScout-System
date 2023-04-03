@@ -3,6 +3,7 @@ using System;
 using FootballScout.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FootballScout.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230331080857_fieldStats")]
+    partial class fieldStats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,64 +81,6 @@ namespace FootballScout.Migrations
                         .IsUnique();
 
                     b.ToTable("FieldStats");
-                });
-
-            modelBuilder.Entity("FootballScout.Data.Entities.GoalStats", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Aerial")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Communication")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Distribution")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Eccentricity")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("GoalkeepingId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MentalId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Mentals")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Overall")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PhysicalId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Physicals")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ShotStoping")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Speed")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GoalkeepingId")
-                        .IsUnique();
-
-                    b.HasIndex("MentalId")
-                        .IsUnique();
-
-                    b.HasIndex("PhysicalId")
-                        .IsUnique();
-
-                    b.ToTable("GoalStats");
                 });
 
             modelBuilder.Entity("FootballScout.Data.Entities.Goalkeeping", b =>
@@ -508,33 +453,6 @@ namespace FootballScout.Migrations
                     b.Navigation("Technical");
                 });
 
-            modelBuilder.Entity("FootballScout.Data.Entities.GoalStats", b =>
-                {
-                    b.HasOne("FootballScout.Data.Entities.Goalkeeping", "Goalkeeping")
-                        .WithOne("GoalStats")
-                        .HasForeignKey("FootballScout.Data.Entities.GoalStats", "GoalkeepingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FootballScout.Data.Entities.Mental", "Mental")
-                        .WithOne("GoalStats")
-                        .HasForeignKey("FootballScout.Data.Entities.GoalStats", "MentalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FootballScout.Data.Entities.Physical", "Physical")
-                        .WithOne("GoalStats")
-                        .HasForeignKey("FootballScout.Data.Entities.GoalStats", "PhysicalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Goalkeeping");
-
-                    b.Navigation("Mental");
-
-                    b.Navigation("Physical");
-                });
-
             modelBuilder.Entity("FootballScout.Data.Entities.Goalkeeping", b =>
                 {
                     b.HasOne("FootballScout.Data.Entities.Player", "Player")
@@ -601,27 +519,15 @@ namespace FootballScout.Migrations
                     b.Navigation("Player");
                 });
 
-            modelBuilder.Entity("FootballScout.Data.Entities.Goalkeeping", b =>
-                {
-                    b.Navigation("GoalStats")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("FootballScout.Data.Entities.Mental", b =>
                 {
                     b.Navigation("FieldStats")
-                        .IsRequired();
-
-                    b.Navigation("GoalStats")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("FootballScout.Data.Entities.Physical", b =>
                 {
                     b.Navigation("FieldStats")
-                        .IsRequired();
-
-                    b.Navigation("GoalStats")
                         .IsRequired();
                 });
 

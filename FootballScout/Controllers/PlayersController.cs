@@ -52,6 +52,7 @@ namespace FootballScout.Controllers
 
             var player = _mapper.Map<Player>(playerDto);
             player.LeagueId = leagueId;
+            player.League_Name = team.League_Name;
             player.TeamId = teamId;
             player.Team_Name = team.Name;
 

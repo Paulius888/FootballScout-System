@@ -19,5 +19,6 @@
         public int Technique { get; set; }
         public int PlayerId { get; set; }
         public Player Player { get; set; }
+        public FieldStats FieldStats { get; set; }
     }
 }

@@ -13,6 +13,8 @@ namespace FootballScout.Data
         public DbSet<Mental> Mental { get; set; }
         public DbSet<Physical> Physical { get; set; }
         public DbSet<Goalkeeping> Goalkeeping { get; set; }
+        public DbSet<FieldStats> FieldStats { get; set; }
+        public DbSet<GoalStats> GoalStats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder optionsBuilder)
         {

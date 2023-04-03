@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FootballScout.Data.Dtos.FieldStats;
 using FootballScout.Data.Dtos.Goalkeeping;
+using FootballScout.Data.Dtos.GoalStats;
 using FootballScout.Data.Dtos.Leagues;
 using FootballScout.Data.Dtos.Mentals;
 using FootballScout.Data.Dtos.Physicals;
@@ -43,6 +45,12 @@ namespace FootballScout.Data
             CreateMap<CreateGoalkeepingDto, Goalkeeping>();
             CreateMap<UpdateGoalkeepingDto, Goalkeeping>();
             CreateMap<Goalkeeping, GoalkeepingDto>();
+
+            CreateMap<FieldStatsDto, FieldStats>();
+            CreateMap<FieldStats, FieldStatsDto>();
+
+            CreateMap<GoalStatsDto, GoalStats>();
+            CreateMap<GoalStats, GoalStatsDto>();
         }
     }
 }
