@@ -3,6 +3,7 @@ using FootballScout.Data.Dtos.Physicals;
 using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.Physicals;
 using FootballScout.Data.Repositories.Players;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballScout.Controllers
@@ -31,6 +32,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<PhysicalDto>> Add(int leagueId, int teamId, int playerId, CreatePhysicalDto physicalDto)
         {
             var player = await _playersRepository.Get(playerId);
@@ -45,6 +47,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPut("{physicalId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<PhysicalDto>> Put(int leagueId, int teamId, int playerId, int physicalId, UpdatePhysicalDto physicalDto)
         {
             var player = await _playersRepository.Get( playerId);
@@ -61,6 +64,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpDelete("{physicalId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int playerId, int physicalId)
         {
             var physical = await _physicalsRepository.Get(playerId, physicalId);

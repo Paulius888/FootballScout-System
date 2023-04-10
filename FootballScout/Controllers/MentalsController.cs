@@ -6,6 +6,7 @@ using FootballScout.Data.Repositories.Leagues;
 using FootballScout.Data.Repositories.Mentals;
 using FootballScout.Data.Repositories.Players;
 using FootballScout.Data.Repositories.Teams;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballScout.Controllers
@@ -34,6 +35,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<MentalDto>> Add(int leagueId, int teamId, int playerId, CreateMentalDto mentalDto)
         {
             var player = await _playersRepository.Get(playerId);
@@ -48,6 +50,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPut("{mentalId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<MentalDto>> Put(int leagueId, int teamId, int playerId, int mentalId, UpdateMentalDto mentalDto)
         {
             var player = await _playersRepository.Get(playerId);
@@ -64,6 +67,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpDelete("{mentalId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int playerId, int mentalId)
         {
             var mental = await _mentalsRepository.Get(playerId, mentalId);

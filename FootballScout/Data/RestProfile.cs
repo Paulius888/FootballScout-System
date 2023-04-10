@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FootballScout.Data.Dtos.Auth;
 using FootballScout.Data.Dtos.FieldStats;
 using FootballScout.Data.Dtos.Goalkeeping;
 using FootballScout.Data.Dtos.GoalStats;
@@ -51,6 +52,8 @@ namespace FootballScout.Data
 
             CreateMap<GoalStatsDto, GoalStats>();
             CreateMap<GoalStats, GoalStatsDto>();
+
+            CreateMap<RestUser, UserDto>();
         }
     }
 }

@@ -1,9 +1,12 @@
-﻿using FootballScout.Data.Entities;
+﻿using System.Reflection.Emit;
+using FootballScout.Data.Dtos.Auth;
+using FootballScout.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootballScout.Data
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext<RestUser>
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options) { }
         public DbSet<League> League { get; set; }
@@ -18,6 +21,7 @@ namespace FootballScout.Data
 
         protected override void OnModelCreating(ModelBuilder optionsBuilder)
         {
+            base.OnModelCreating(optionsBuilder);
             optionsBuilder.UseSerialColumns();
         }
     }

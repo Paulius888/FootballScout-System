@@ -3,6 +3,7 @@ using FootballScout.Data.Dtos.Goalkeeping;
 using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.GoalKeeping;
 using FootballScout.Data.Repositories.Players;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballScout.Controllers
@@ -31,6 +32,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<GoalkeepingDto>> Add(int leagueId, int teamId, int playerId, CreateGoalkeepingDto goalkeepingDto)
         {
             var player = await _playersRepository.Get( playerId);
@@ -45,6 +47,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPut("{goalkeepingId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<GoalkeepingDto>> Put(int leagueId, int teamId, int playerId, int goalkeepingId, UpdateGoalkeepingDto goalkeepingDto)
         {
             var player = await _playersRepository.Get( playerId);
@@ -61,6 +64,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpDelete("{goalkeepingId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int playerId, int goalkeepingId)
         {
             var goalkeeping = await _goalkeepingRepository.Get(playerId, goalkeepingId);

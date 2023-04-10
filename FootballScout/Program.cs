@@ -1,4 +1,7 @@
+using System.Text;
+using FootballScout.Authentication;
 using FootballScout.Data;
+using FootballScout.Data.Dtos.Auth;
 using FootballScout.Data.Repositories.GoalKeeping;
 using FootballScout.Data.Repositories.Leagues;
 using FootballScout.Data.Repositories.Mentals;
@@ -7,12 +10,30 @@ using FootballScout.Data.Repositories.Players;
 using FootballScout.Data.Repositories.Teams;
 using FootballScout.Data.Repositories.Technicals;
 using FootballScout.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddIdentity<RestUser, IdentityRole>()
+    .AddEntityFrameworkStores<DatabaseContext>()
+    .AddDefaultTokenProviders();
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters.ValidAudience = builder.Configuration.GetSection("JWT:ValidAudience").Value;
+        options.TokenValidationParameters.ValidIssuer = builder.Configuration.GetSection("JWT:ValidIssuer").Value;
+        options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JWT:Secret").Value));
+    });
 builder.Services.AddControllers();
 builder.Services.AddDbContext<DatabaseContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("NewFmDb")));
@@ -24,6 +45,8 @@ builder.Services.AddTransient<ITechnicalsRepository, TechnicalsRepository>();
 builder.Services.AddTransient<IMentalsRepository, MentalsRepository>();
 builder.Services.AddTransient<IPhysicalsRepository, PhysicalsRepository>();
 builder.Services.AddTransient<IGoalKeepingRepository, GoalKeepingRepository>();
+builder.Services.AddTransient<ITokenManager, TokenManager>();
+builder.Services.AddTransient<DatabaseSeeder, DatabaseSeeder>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IUriService>(o =>
 {
@@ -38,6 +61,10 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// seeding
+using var scope = app.Services.CreateScope();
+var dbSeeder = (DatabaseSeeder)scope.ServiceProvider.GetService(typeof(DatabaseSeeder));
+await dbSeeder.SeedAsync();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -48,6 +75,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

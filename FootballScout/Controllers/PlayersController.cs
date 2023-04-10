@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FootballScout.Authentication.Model;
 using FootballScout.Data.Dtos.Players;
 using FootballScout.Data.Dtos.Teams;
 using FootballScout.Data.Entities;
@@ -9,6 +10,7 @@ using FootballScout.Filter;
 using FootballScout.Helpers;
 using FootballScout.Services;
 using FootballScout.Wrappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballScout.Controllers
@@ -45,6 +47,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<PlayerDto>> Add(int leagueId, int teamId, CreatePlayerDto playerDto)
         {
             var team = await _teamsRepository.Get(leagueId, teamId);
@@ -62,6 +65,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPut("{playerId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<PlayerDto>> Put(int leagueId, int teamId, int playerId, UpdatePlayerDto playerDto)
         {
             var team = await _teamsRepository.Get(leagueId, teamId);
@@ -78,6 +82,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpDelete("{playerId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int teamId, int playerId)
         {
             var player = await _playersRepository.Get( playerId);
