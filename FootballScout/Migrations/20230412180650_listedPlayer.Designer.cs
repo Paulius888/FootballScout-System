@@ -3,6 +3,7 @@ using System;
 using FootballScout.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FootballScout.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230412180650_listedPlayer")]
+    partial class listedPlayer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -289,15 +292,53 @@ namespace FootballScout.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("PlayerId")
+                    b.Property<int>("Age")
                         .HasColumnType("integer");
+
+                    b.Property<DateOnly>("Contract")
+                        .HasColumnType("date");
+
+                    b.Property<int>("CurrentAbility")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsEuCitizen")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsGoalKeeper")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Personality")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Player_id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PotentialAbility")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
+
+                    b.Property<string[]>("Role")
+                        .IsRequired()
+                        .HasColumnType("text[]");
 
                     b.Property<int>("ShortListId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Team_Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.HasIndex("PlayerId");
+                    b.Property<int>("Wage")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("ShortListId");
 
@@ -790,19 +831,11 @@ namespace FootballScout.Migrations
 
             modelBuilder.Entity("FootballScout.Data.Entities.ListedPlayer", b =>
                 {
-                    b.HasOne("FootballScout.Data.Entities.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FootballScout.Data.Entities.ShortList", "ShortList")
                         .WithMany()
                         .HasForeignKey("ShortListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Player");
 
                     b.Navigation("ShortList");
                 });

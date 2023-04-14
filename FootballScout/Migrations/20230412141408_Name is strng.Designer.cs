@@ -3,6 +3,7 @@ using System;
 using FootballScout.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FootballScout.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230412141408_Name is strng")]
+    partial class Nameisstrng
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,29 +282,6 @@ namespace FootballScout.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("League");
-                });
-
-            modelBuilder.Entity("FootballScout.Data.Entities.ListedPlayer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ShortListId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlayerId");
-
-                    b.HasIndex("ShortListId");
-
-                    b.ToTable("ListedPlayer");
                 });
 
             modelBuilder.Entity("FootballScout.Data.Entities.Mental", b =>
@@ -786,25 +766,6 @@ namespace FootballScout.Migrations
                         .IsRequired();
 
                     b.Navigation("Player");
-                });
-
-            modelBuilder.Entity("FootballScout.Data.Entities.ListedPlayer", b =>
-                {
-                    b.HasOne("FootballScout.Data.Entities.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FootballScout.Data.Entities.ShortList", "ShortList")
-                        .WithMany()
-                        .HasForeignKey("ShortListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Player");
-
-                    b.Navigation("ShortList");
                 });
 
             modelBuilder.Entity("FootballScout.Data.Entities.Mental", b =>
