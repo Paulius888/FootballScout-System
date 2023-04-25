@@ -1,11 +1,16 @@
 ﻿using System.Runtime.CompilerServices;
 using AutoMapper;
 using FootballScout.Data.Dtos.Leagues;
+using FootballScout.Data.Dtos.Players;
 using FootballScout.Data.Dtos.ShortList;
 using FootballScout.Data.Dtos.Teams;
 using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.RestUsers;
 using FootballScout.Data.Repositories.ShortLists;
+using FootballScout.Filter;
+using FootballScout.Helpers;
+using FootballScout.Services;
+using FootballScout.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballScout.Controllers
@@ -17,19 +22,27 @@ namespace FootballScout.Controllers
         private readonly IMapper _mapper;
         private readonly IShortListsRepository _shortListsRepository;
         private readonly IRestUsersRepository _restUsersRepository;
+        private readonly IUriService uriService;
 
-        public ShortListController(IMapper mapper, IShortListsRepository shortListsRepository, IRestUsersRepository restUsersRepository)
+        public ShortListController(IMapper mapper, IShortListsRepository shortListsRepository, IRestUsersRepository restUsersRepository,
+            IUriService uriService)
         {
             _mapper = mapper;
             _shortListsRepository = shortListsRepository;
             _restUsersRepository = restUsersRepository;
+            this.uriService = uriService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ShortListDto>> GetAll(string userId)
+        public async Task<ActionResult<ShortListDto>> GetAll(string userId, [FromQuery] PaginationFilter filter, [FromQuery] string? query = null)
         {
-            var shortList = await _shortListsRepository.GetAllUserShortlists(userId);
-            return shortList.Select(o => _mapper.Map<ShortListDto>(o));
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var shortList = await _shortListsRepository.GetAllUserShortlists(userId, filter, query);
+            var shortListResponse = _mapper.Map<IList<ShortListDto>>(shortList);
+            var totalRecords = await _shortListsRepository.TotalCount(userId, query);
+            var pagedResponse = PaginationHelper.CreatePagedReponse<ShortListDto>(shortListResponse, validFilter, totalRecords, uriService, route);
+            return Ok(pagedResponse);
         }
 
         [HttpPost]
@@ -43,7 +56,7 @@ namespace FootballScout.Controllers
 
             await _shortListsRepository.Add(shortList);
 
-            return Created($"/api/shortlist/{shortList.Id}", _mapper.Map<ShortListDto>(shortList));
+            return Created($"/api/shortlist/{shortList.Id}", new Response<ShortListDto>(_mapper.Map<ShortListDto>(shortList)));
         }
 
         [HttpPut("{id}")]
@@ -55,7 +68,7 @@ namespace FootballScout.Controllers
             _mapper.Map(shortListDto, shortList);
 
             await _shortListsRepository.Update(shortList);
-            return Ok(_mapper.Map<ShortListDto>(shortList));
+            return Ok(new Response<ShortListDto>(_mapper.Map<ShortListDto>(shortList)));
         }
 
         [HttpDelete("{id}")]

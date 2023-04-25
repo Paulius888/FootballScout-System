@@ -14,7 +14,7 @@ namespace FootballScout.Data.Repositories.ListedPlayers
 
         public async Task<Player[]> GetShortlistedPlayers(int shortlistId, Player[] array)
         {
-            var something = _databaseContext.ListedPlayer.Join(_databaseContext.Player,
+            var joinedValues = _databaseContext.ListedPlayer.Join(_databaseContext.Player,
                                                                  l => l.PlayerId,
                                                                  p => p.Id,
                                                                  (listed, player) => new
@@ -22,10 +22,10 @@ namespace FootballScout.Data.Repositories.ListedPlayers
                                                                      listedPlayer = listed.ShortListId,
                                                                      Player = player
                                                                  });
-            if(something != null)
+            if(joinedValues != null)
             {
                 int i = 0;
-                foreach (var player in something)
+                foreach (var player in joinedValues)
                 {
                     if(player.listedPlayer == shortlistId)
                     {
@@ -47,6 +47,31 @@ namespace FootballScout.Data.Repositories.ListedPlayers
         public async Task<ListedPlayer> Get(int id)
         {
             return await _databaseContext.ListedPlayer.FirstOrDefaultAsync(o => o.Id == id);
+        }
+
+        public async Task<int> RetrieveId(int id)
+        {
+            var comparedId = 0;
+            var joinedValues = _databaseContext.ListedPlayer.Join(_databaseContext.Player,
+                                                                 l => l.PlayerId,
+                                                                 p => p.Id,
+                                                                 (listed, player) => new
+                                                                 {
+                                                                     listedPlayer = listed.Id,
+                                                                     Player = player
+                                                                 });
+            if (joinedValues != null)
+            {
+                int i = 0;
+                foreach (var player in joinedValues)
+                {
+                    if(player.Player.Id == id)
+                    {
+                        comparedId = player.listedPlayer;
+                    }
+                }
+            }
+            return comparedId;
         }
 
         public async Task<ListedPlayer> Add(int id, ListedPlayer listedPlayer)

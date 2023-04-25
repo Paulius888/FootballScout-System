@@ -40,9 +40,9 @@ namespace FootballScout.Controllers
             var route = Request.Path.Value;
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
             var player = await _playersRepository.GetAll(teamId, filter, query);
-            var teamResponse = _mapper.Map<IList<PlayerDto>>(player);
+            var playerResponse = _mapper.Map<IList<PlayerDto>>(player);
             var totalRecords = await _playersRepository.TotalCount(teamId, query);
-            var pagedResponse = PaginationHelper.CreatePagedReponse<PlayerDto>(teamResponse, validFilter, totalRecords, uriService, route);
+            var pagedResponse = PaginationHelper.CreatePagedReponse<PlayerDto>(playerResponse, validFilter, totalRecords, uriService, route);
             return Ok(pagedResponse);
         }
 

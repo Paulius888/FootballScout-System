@@ -1,4 +1,5 @@
 ﻿using FootballScout.Data.Entities;
+using FootballScout.Filter;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootballScout.Data.Repositories.ShortLists
@@ -12,9 +13,23 @@ namespace FootballScout.Data.Repositories.ShortLists
             _databaseContext = databaseContext;
         }
 
-        public async Task<List<ShortList>> GetAllUserShortlists(string userId)
+        public async Task<List<ShortList>> GetAllUserShortlists(string userId, PaginationFilter filter, string query = null)
         {
-            return await _databaseContext.ShortList.Where(o => o.UserId == userId).ToListAsync();
+            var queryable = Search(query);
+
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+
+            return await queryable.Where(o => o.UserId == userId)
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToListAsync();
+        }
+
+        public async Task<int> TotalCount(string userId, string query = null)
+        {
+            var queryable = Search(query);
+            int totalCount = queryable.Where(o => o.UserId == userId).Count();
+            return totalCount;
         }
 
         public async Task<ShortList> Get(int id)
@@ -40,6 +55,18 @@ namespace FootballScout.Data.Repositories.ShortLists
         {
             _databaseContext.ShortList.Remove(shortList);
             await _databaseContext.SaveChangesAsync();
+        }
+
+        private IQueryable<ShortList> Search(string query)
+        {
+            var queryable = _databaseContext.ShortList.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(query) || x.Name.Contains(query));
+            }
+
+            return queryable;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace FootballScout.Controllers
         private readonly IRestUsersRepository _restUsersRepository;
         private readonly IListedPlayersRepository _listedPlayersRepository;
         private readonly IPlayersRepository _playersRepository;
+        int maxShortlistedPlayers = 20;
 
         public ListedPlayerController(IMapper mapper, IShortListsRepository shortListsRepository, IRestUsersRepository restUsersRepository,
             IListedPlayersRepository listedPlayersRepository, IPlayersRepository playersRepository)
@@ -44,6 +45,12 @@ namespace FootballScout.Controllers
         [HttpPost]
         public async Task<ActionResult<ListedPlayersDto>> Add(int id, CreateListedPlayersDto listedPlayerDto)
         {
+            var playerCount = await _listedPlayersRepository.GetShortlistedPlayersCount(id);
+            if(playerCount.Count() >= maxShortlistedPlayers)
+            {
+                return BadRequest($"20 players is the maximum inside 1 shortlist");
+            }
+
             var shortList = await _shortListsRepository.Get(id);
             if (shortList == null) return NotFound($"Could not find a shortList with this id {id}");
 
@@ -54,6 +61,19 @@ namespace FootballScout.Controllers
             await _listedPlayersRepository.Add(id, listedPlayer);
 
             return Created($"/api/shortlist/{{userId}}/{id}/listed/{listedPlayer.Id}", _mapper.Map<ListedPlayersDto>(listedPlayer));
+        }
+
+        [HttpDelete("{shortlistId}")]
+        public async Task<ActionResult> Delete(int shortlistId)
+        {
+            var listedId = await _listedPlayersRepository.RetrieveId(shortlistId);
+            var listedPlayer = await _listedPlayersRepository.Get(listedId);
+            if (listedPlayer == null) return NotFound($"listedPlayer with id '{shortlistId}' not found");
+
+            await _listedPlayersRepository.Remove(listedPlayer);
+
+            //204
+            return NoContent();
         }
     }
 }

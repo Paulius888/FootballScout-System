@@ -8,6 +8,7 @@ namespace FootballScout.Data.Repositories.ListedPlayers
         Task<Player[]> GetShortlistedPlayers(int shortlistId, Player[] array);
         Task Remove(ListedPlayer listedPlayer);
         Task<ListedPlayer> Get(int id);
+        Task<int> RetrieveId(int id);
         Task<List<ListedPlayer>> GetShortlistedPlayersCount(int shortlistId);
     }
 }
