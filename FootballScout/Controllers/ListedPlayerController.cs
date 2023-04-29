@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Data;
+using AutoMapper;
 using FootballScout.Data.Dtos.ListedPlayers;
 using FootballScout.Data.Dtos.Players;
 using FootballScout.Data.Entities;
@@ -7,6 +8,7 @@ using FootballScout.Data.Repositories.Players;
 using FootballScout.Data.Repositories.RestUsers;
 using FootballScout.Data.Repositories.ShortLists;
 using FootballScout.Migrations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballScout.Controllers
@@ -33,6 +35,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, Scout")]
         public async Task<ActionResult<ListedPlayersDto>> GetAll(int id)
         {
             var playerCount = await _listedPlayersRepository.GetShortlistedPlayersCount(id);
@@ -43,9 +46,19 @@ namespace FootballScout.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Scout")]
         public async Task<ActionResult<ListedPlayersDto>> Add(int id, CreateListedPlayersDto listedPlayerDto)
         {
             var playerCount = await _listedPlayersRepository.GetShortlistedPlayersCount(id);
+
+            for (int i=0; i<playerCount.Count; i++)
+            {
+                if(playerCount[i].PlayerId == listedPlayerDto.PlayerId)
+                {
+                    return BadRequest($"Such player already exists in the chosen shortlist");
+                }
+            }
+
             if(playerCount.Count() >= maxShortlistedPlayers)
             {
                 return BadRequest($"20 players is the maximum inside 1 shortlist");
@@ -64,6 +77,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpDelete("{shortlistId}")]
+        [Authorize(Roles = "Admin, Scout")]
         public async Task<ActionResult> Delete(int shortlistId)
         {
             var listedId = await _listedPlayersRepository.RetrieveId(shortlistId);

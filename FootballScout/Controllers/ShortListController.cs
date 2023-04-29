@@ -11,6 +11,7 @@ using FootballScout.Filter;
 using FootballScout.Helpers;
 using FootballScout.Services;
 using FootballScout.Wrappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballScout.Controllers
@@ -33,6 +34,7 @@ namespace FootballScout.Controllers
             this.uriService = uriService;
         }
 
+        [Authorize(Roles = "Admin, Scout")]
         [HttpGet]
         public async Task<ActionResult<ShortListDto>> GetAll(string userId, [FromQuery] PaginationFilter filter, [FromQuery] string? query = null)
         {
@@ -46,6 +48,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Scout")]
         public async Task<ActionResult<ShortListDto>> Add(string userId, CreateShortListDto shortListDto)
         {
             var user = await _restUsersRepository.Get(userId);
@@ -60,6 +63,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, Scout")]
         public async Task<ActionResult<ShortListDto>> Update(int id, UpdateShortListDto shortListDto)
         {
             var shortList = await _shortListsRepository.Get(id);
@@ -72,6 +76,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, Scout")]
         public async Task<ActionResult> Delete(int id)
         {
             var shortList = await _shortListsRepository.Get(id);
