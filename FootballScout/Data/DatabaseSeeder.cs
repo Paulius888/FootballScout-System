@@ -28,7 +28,7 @@ namespace FootballScout.Data
 
             var newAdminUser = new RestUser
             {
-                UserName = "admin1",
+                UserName = "Paulius",
                 Email = "eidimtas.paulius@gmail.com"
             };
 
