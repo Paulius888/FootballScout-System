@@ -1,5 +1,5 @@
 ﻿using FootballScout.Authentication.Model;
-using FootballScout.Data.Dtos.Auth;
+using FootballScout.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace FootballScout.Data

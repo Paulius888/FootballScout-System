@@ -2,6 +2,7 @@
 using FootballScout.Authentication;
 using FootballScout.Authentication.Model;
 using FootballScout.Data.Dtos.Auth;
+using FootballScout.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

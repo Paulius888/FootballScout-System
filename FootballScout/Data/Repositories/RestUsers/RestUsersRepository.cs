@@ -1,4 +1,4 @@
-﻿using FootballScout.Data.Dtos.Auth;
+﻿using FootballScout.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootballScout.Data.Repositories.RestUsers

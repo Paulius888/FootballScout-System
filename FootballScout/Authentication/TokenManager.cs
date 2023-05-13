@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using FootballScout.Authentication.Model;
-using FootballScout.Data.Dtos.Auth;
+using FootballScout.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -38,7 +38,7 @@ namespace FootballScout.Authentication
             var accessSecurityToken = new JwtSecurityToken(
                 issuer: _issuer,
                 audience: _audience,
-                expires: DateTime.UtcNow.AddHours(1),
+                expires: DateTime.UtcNow.AddMinutes(90),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(_authSigningKey, SecurityAlgorithms.HmacSha256)
                 );

@@ -1,6 +1,4 @@
-﻿using FootballScout.Data.Dtos.Auth;
-
-namespace FootballScout.Data.Entities
+﻿namespace FootballScout.Data.Entities
 {
     public class ShortList
     {

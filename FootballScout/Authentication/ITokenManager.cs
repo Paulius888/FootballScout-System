@@ -1,4 +1,4 @@
-﻿using FootballScout.Data.Dtos.Auth;
+﻿using FootballScout.Data.Entities;
 
 namespace FootballScout.Authentication
 {

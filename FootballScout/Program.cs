@@ -1,7 +1,7 @@
 using System.Text;
 using FootballScout.Authentication;
 using FootballScout.Data;
-using FootballScout.Data.Dtos.Auth;
+using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.GoalKeeping;
 using FootballScout.Data.Repositories.Leagues;
 using FootballScout.Data.Repositories.ListedPlayers;
