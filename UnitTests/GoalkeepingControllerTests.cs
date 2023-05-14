@@ -52,7 +52,8 @@ namespace UnitTests
 
             playersRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>())).ReturnsAsync(expectedItem1);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();
@@ -81,7 +82,8 @@ namespace UnitTests
 
             goalkeepingRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(expectedItem);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();

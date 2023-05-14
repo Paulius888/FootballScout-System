@@ -7,7 +7,7 @@ namespace FootballScout.Data.Repositories.Leagues
     public class LeaguesRepository : ILeaguesRepository
     {
         private readonly DatabaseContext _databaseContext;
-        public LeaguesRepository(DatabaseContext databaseContext) 
+        public LeaguesRepository(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
         }
@@ -54,7 +54,7 @@ namespace FootballScout.Data.Repositories.Leagues
             await _databaseContext.SaveChangesAsync();
         }
 
-        private IQueryable<League> Search (string query)
+        private IQueryable<League> Search(string query)
         {
             var queryable = _databaseContext.League.AsQueryable();
 

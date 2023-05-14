@@ -21,7 +21,7 @@ namespace UnitTests
         [Fact]
         public async Task Post_WithTechnicalsToCreate_ReturnsCreatedItem()
         {
-            var technicalsToCreate = new CreateTechnicalDto(1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+            var technicalsToCreate = new CreateTechnicalDto(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
             var expectedItem = CreateRandomPlayer();
 
@@ -53,7 +53,8 @@ namespace UnitTests
 
             playersRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>())).ReturnsAsync(expectedItem1);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();
@@ -64,7 +65,7 @@ namespace UnitTests
 
             var technicalId = expectedItem.Id;
 
-            var itemToUpdate = new UpdateTechnicalDto(1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+            var itemToUpdate = new UpdateTechnicalDto(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
             var result = await controller.Put(expectedItem1.LeagueId, expectedItem1.TeamId, playerId, technicalId, itemToUpdate);
 
@@ -82,7 +83,8 @@ namespace UnitTests
 
             technicalsRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(expectedItem);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();

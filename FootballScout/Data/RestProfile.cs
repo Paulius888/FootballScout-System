@@ -17,7 +17,7 @@ namespace FootballScout.Data
 {
     public class RestProfile : Profile
     {
-        public RestProfile() 
+        public RestProfile()
         {
             CreateMap<League, LeagueDto>();
             CreateMap<CreateLeagueDto, League>();

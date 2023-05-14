@@ -35,7 +35,7 @@ namespace FootballScout.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<GoalkeepingDto>> Add(int leagueId, int teamId, int playerId, CreateGoalkeepingDto goalkeepingDto)
         {
-            var player = await _playersRepository.Get( playerId);
+            var player = await _playersRepository.Get(playerId);
             if (player == null) return NotFound($"Could not find a player with this id {playerId}");
 
             var goalkeeping = _mapper.Map<Goalkeeping>(goalkeepingDto);
@@ -50,7 +50,7 @@ namespace FootballScout.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<GoalkeepingDto>> Put(int leagueId, int teamId, int playerId, int goalkeepingId, UpdateGoalkeepingDto goalkeepingDto)
         {
-            var player = await _playersRepository.Get( playerId);
+            var player = await _playersRepository.Get(playerId);
             if (player == null) return NotFound($"Could not find a player with this id {playerId}");
 
             var oldGoalkeeping = await _goalkeepingRepository.Get(playerId, goalkeepingId);

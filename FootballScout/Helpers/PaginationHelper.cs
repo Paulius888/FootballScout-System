@@ -1,5 +1,4 @@
-﻿using Azure;
-using FootballScout.Filter;
+﻿using FootballScout.Filter;
 using FootballScout.Services;
 using FootballScout.Wrappers;
 

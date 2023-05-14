@@ -27,7 +27,7 @@ namespace UnitTests
         {
             var date = new DateOnly(2024, 1, 1);
             var arr = new[] { "DC" };
-            var playerToCreate = new CreatePlayerDto("Test", 1, date, 1, 1,1,1,true,true,"person", arr);
+            var playerToCreate = new CreatePlayerDto("Test", 1, date, 1, 1, 1, 1, true, true, "person", arr);
 
             var expectedItem1 = CreateRandomTeam();
 
@@ -60,7 +60,8 @@ namespace UnitTests
 
             playersRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>())).ReturnsAsync(expectedItem);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();
@@ -73,7 +74,7 @@ namespace UnitTests
 
             var TeamId = expectedItem1.Id;
 
-            var itemToUpdate = new UpdatePlayerDto("Test1", 1, expectedItem.Contract, 1,1,1,1,true,false,"personality", expectedItem.Role);
+            var itemToUpdate = new UpdatePlayerDto("Test1", 1, expectedItem.Contract, 1, 1, 1, 1, true, false, "personality", expectedItem.Role);
 
             var result = await controller.Put(LeagueId, TeamId, PlayerId, itemToUpdate);
 
@@ -95,7 +96,8 @@ namespace UnitTests
 
             playersRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>())).ReturnsAsync(expectedItem);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();

@@ -41,7 +41,7 @@ namespace UnitTests
             });
             var mapper = config.CreateMapper();
 
-            var controller = new AllPlayersController(playersRepositoryStub.Object,teamsRepositoryStub.Object, mapper,
+            var controller = new AllPlayersController(playersRepositoryStub.Object, teamsRepositoryStub.Object, mapper,
                 leagueRepositoryStub.Object, uriStub.Object, technicalRepositoryStub.Object, mentalRepositoryStub.Object,
                 physicalRepositoryStub.Object, goalkeepingRepositoryStub.Object);
 
@@ -57,7 +57,8 @@ namespace UnitTests
 
             playersRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>())).ReturnsAsync(expectedItem);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();

@@ -31,7 +31,7 @@ namespace UnitTests
             });
             var mapper = config.CreateMapper();
 
-            var controller = new TeamsController(teamsRepositoryStub.Object,  mapper, leagueRepositoryStub.Object, uriStub.Object);
+            var controller = new TeamsController(teamsRepositoryStub.Object, mapper, leagueRepositoryStub.Object, uriStub.Object);
 
             var result = await controller.Get(random.Next(10), random.Next(10));
 
@@ -45,7 +45,8 @@ namespace UnitTests
 
             teamsRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(expectedItem);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();
@@ -68,7 +69,8 @@ namespace UnitTests
 
             leagueRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>())).ReturnsAsync(expectedItem1);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();
@@ -94,7 +96,8 @@ namespace UnitTests
 
             leagueRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>())).ReturnsAsync(expectedItem1);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();
@@ -107,7 +110,7 @@ namespace UnitTests
 
             var itemToUpdate = new UpdateTeamDto("Test1", "Test1", "Test1");
 
-            var result = await controller.Put(LeagueId, TeamId,itemToUpdate);
+            var result = await controller.Put(LeagueId, TeamId, itemToUpdate);
 
             var resultObject = GetObjectResultContent<Response<TeamDto>>(result);
 
@@ -124,7 +127,8 @@ namespace UnitTests
 
             teamsRepositoryStub.Setup(repo => repo.Get(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(expectedItem);
 
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new RestProfile());
             });
             var mapper = config.CreateMapper();

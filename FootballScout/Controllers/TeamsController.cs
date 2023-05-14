@@ -21,7 +21,7 @@ namespace FootballScout.Controllers
         private readonly IMapper _mapper;
         private readonly IUriService uriService;
 
-        public TeamsController(ITeamsRepository teamsRepository, IMapper mapper, ILeaguesRepository leaguesRepository, IUriService uriService) 
+        public TeamsController(ITeamsRepository teamsRepository, IMapper mapper, ILeaguesRepository leaguesRepository, IUriService uriService)
         {
             _teamsRepository = teamsRepository;
             _mapper = mapper;
@@ -46,14 +46,14 @@ namespace FootballScout.Controllers
         {
             var team = await _teamsRepository.Get(leagueId, teamId);
 
-            if(team == null) return NotFound();
+            if (team == null) return NotFound();
 
             return Ok(new Response<TeamDto>(_mapper.Map<TeamDto>(team)));
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<Response<TeamDto>>> Add (int leagueId, CreateTeamDto teamDto)
+        public async Task<ActionResult<Response<TeamDto>>> Add(int leagueId, CreateTeamDto teamDto)
         {
             var league = await _leaguesRepository.Get(leagueId);
             if (league == null) return NotFound($"Could not find a league with this id {leagueId}");
@@ -86,9 +86,9 @@ namespace FootballScout.Controllers
 
         [HttpDelete("{teamId}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Delete (int leagueId, int teamId)
+        public async Task<ActionResult> Delete(int leagueId, int teamId)
         {
-            var team = await _teamsRepository.Get(leagueId,teamId);
+            var team = await _teamsRepository.Get(leagueId, teamId);
             if (team == null) return NotFound();
 
             await _teamsRepository.Remove(team);

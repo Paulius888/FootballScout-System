@@ -50,15 +50,15 @@ namespace FootballScout.Controllers
         {
             var playerCount = await _listedPlayersRepository.GetShortlistedPlayersCount(id);
 
-            for (int i=0; i<playerCount.Count; i++)
+            for (int i = 0; i < playerCount.Count; i++)
             {
-                if(playerCount[i].PlayerId == listedPlayerDto.PlayerId)
+                if (playerCount[i].PlayerId == listedPlayerDto.PlayerId)
                 {
                     return BadRequest($"Such player already exists in the chosen shortlist");
                 }
             }
 
-            if(playerCount.Count() >= maxShortlistedPlayers)
+            if (playerCount.Count() >= maxShortlistedPlayers)
             {
                 return BadRequest($"20 players is the maximum inside 1 shortlist");
             }

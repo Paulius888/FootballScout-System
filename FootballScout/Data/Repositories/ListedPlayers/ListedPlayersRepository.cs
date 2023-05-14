@@ -21,19 +21,19 @@ namespace FootballScout.Data.Repositories.ListedPlayers
                                                                      listedPlayer = listed.ShortListId,
                                                                      Player = player
                                                                  });
-            if(joinedValues != null)
+            if (joinedValues != null)
             {
                 int i = 0;
                 foreach (var player in joinedValues)
                 {
-                    if(player.listedPlayer == shortlistId)
+                    if (player.listedPlayer == shortlistId)
                     {
                         array[i] = player.Player;
                         i++;
                     }
                 }
             }
-   
+
             return array;
             //return await _databaseContext.ListedPlayer.Where(o => o.ShortListId == shortlistId).ToListAsync();
         }
@@ -64,7 +64,7 @@ namespace FootballScout.Data.Repositories.ListedPlayers
                 int i = 0;
                 foreach (var player in joinedValues)
                 {
-                    if(player.Player.Id == id)
+                    if (player.Player.Id == id)
                     {
                         comparedId = player.listedPlayer;
                     }
@@ -99,7 +99,7 @@ namespace FootballScout.Data.Repositories.ListedPlayers
             var queryable = _databaseContext.ListedPlayer.AsQueryable();
 
             queryable = queryable.Where(x => x.PlayerId.ToString().Contains(StringifyPlayerId) && x.ShortListId.ToString().Contains(StringifyId));
-            if(queryable.Count() <= 0)
+            if (queryable.Count() <= 0)
             {
                 return null;
             }

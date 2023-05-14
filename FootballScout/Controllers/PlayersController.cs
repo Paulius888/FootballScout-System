@@ -69,7 +69,7 @@ namespace FootballScout.Controllers
             var team = await _teamsRepository.Get(leagueId, teamId);
             if (team == null) return NotFound($"Could not find a team with this id {teamId}");
 
-            var oldPlayer = await _playersRepository.Get( playerId);
+            var oldPlayer = await _playersRepository.Get(playerId);
             if (oldPlayer == null) return NotFound();
 
             _mapper.Map(playerDto, oldPlayer);
@@ -83,7 +83,7 @@ namespace FootballScout.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int teamId, int playerId)
         {
-            var player = await _playersRepository.Get( playerId);
+            var player = await _playersRepository.Get(playerId);
             if (player == null) return NotFound();
 
             await _playersRepository.Remove(player);

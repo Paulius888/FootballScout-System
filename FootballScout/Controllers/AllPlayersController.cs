@@ -106,7 +106,7 @@ namespace FootballScout.Controllers
 
             var physicals = await _physicalsRepository.GetAll(playerId);
             if (physicals == null) return NotFound($"Could not find Physical attributes of player with this id: {playerId}");
-           
+
             FieldStatsDto fieldStats = new FieldStatsDto(0, 0, 0, 0, 0, 0, 0, 0, 0);
             var newFieldStats = _mapper.Map<FieldStats>(fieldStats);
             newFieldStats.Defending = (technicals[0].Marking + technicals[0].Tackling + mentals[0].Positioning) / 3;
@@ -117,7 +117,7 @@ namespace FootballScout.Controllers
             newFieldStats.Technicals = (technicals[0].Dribbling + technicals[0].FirstTouch + technicals[0].Technique) / 3;
             newFieldStats.Aerial = (technicals[0].Heading + mentals[0].Bravery + physicals[0].JumpingReach) / 3;
             newFieldStats.Mentals = (mentals[0].Aggression + mentals[0].Composure + mentals[0].Bravery + mentals[0].Concentration) / 4;
-            newFieldStats.Overall = (newFieldStats.Defending + newFieldStats.Physicals + newFieldStats.Speed + newFieldStats.Vision 
+            newFieldStats.Overall = (newFieldStats.Defending + newFieldStats.Physicals + newFieldStats.Speed + newFieldStats.Vision
                 + newFieldStats.Attacking + newFieldStats.Technicals + newFieldStats.Aerial + newFieldStats.Mentals) / 8;
             return Ok(_mapper.Map<FieldStatsDto>(newFieldStats));
         }

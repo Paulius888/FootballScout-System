@@ -6,7 +6,7 @@ namespace FootballScout.Data
 {
     public class DatabaseContext : IdentityDbContext<RestUser>
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options) { }
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
         public DbSet<League> League { get; set; }
         public DbSet<Team> Team { get; set; }
         public DbSet<Player> Player { get; set; }
