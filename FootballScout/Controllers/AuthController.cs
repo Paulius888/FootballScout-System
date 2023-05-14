@@ -43,7 +43,6 @@ namespace FootballScout.Controllers
             var createUserResult = await _userManager.CreateAsync(newUser, registerUserDto.Password);
             if (!createUserResult.Succeeded)
             {
-                //delet later
                 return BadRequest("Could not create user");
             }
 

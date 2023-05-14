@@ -35,7 +35,6 @@ namespace FootballScout.Data.Repositories.ListedPlayers
             }
 
             return array;
-            //return await _databaseContext.ListedPlayer.Where(o => o.ShortListId == shortlistId).ToListAsync();
         }
 
         public async Task<List<ListedPlayer>> GetShortlistedPlayersCount(int shortlistId)
