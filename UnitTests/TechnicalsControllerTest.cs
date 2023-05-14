@@ -24,25 +24,6 @@ namespace UnitTests
         private readonly Mock<ITechnicalsRepository> technicalsRepositoryStub = new();
         private readonly Random random = new();
 
-        //public async Task GetAll_WithExistingPlayerId_ReturnsAll()
-        //{
-        //    var expectedItem = new List<Technical> { createTechnicals() };
-
-        //    technicalsRepositoryStub.Setup(repo => repo.GetAll(It.IsAny<int>())).Returns<List<Technical>>(expectedItem);
-
-        //    var config = new MapperConfiguration(cfg =>
-        //    {
-        //        cfg.AddProfile(new RestProfile());
-        //    });
-        //    var mapper = config.CreateMapper();
-
-        //    var controller = new TeamsController(teamsRepositoryStub.Object, mapper, leagueRepositoryStub.Object, uriStub.Object);
-
-        //    var result = await controller.Get(random.Next(10), random.Next(10));
-
-        //    result.Result.Should().BeOfType<NotFoundResult>();
-        //}
-
         [Fact]
         public async Task Post_WithTechnicalsToCreate_ReturnsCreatedItem()
         {

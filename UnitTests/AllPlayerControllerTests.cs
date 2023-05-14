@@ -79,38 +79,6 @@ namespace UnitTests
             resultObject.Data.Should().BeEquivalentTo(expectedItem, options => options.ComparingByMembers<PlayerDto>().ExcludingMissingMembers());
         }
 
-        //[Fact]
-        //public async Task GetFieldPlayerStats_WithExistingId_ReturnsExpectedStats()
-        //{
-        //    var expectedItem1 = new List<Technical> { createTechnicals() };
-
-        //    var expectedItem2 = createMentals();
-
-        //    var expectedItem3 = createPhysicals();
-
-        //    technicalRepositoryStub.Setup(repo => repo.GetAll(It.IsAny<int>())).Returns(expectedItem1);
-
-        //    mentalRepositoryStub.Setup(repo => repo.GetAll(It.IsAny<int>(), It.IsAny<int>())).Returns(expectedItem2);
-
-        //    physicalRepositoryStub.Setup(repo => repo.GetAll(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(expectedItem3);
-
-        //    var config = new MapperConfiguration(cfg =>
-        //    {
-        //        cfg.AddProfile(new RestProfile());
-        //    });
-        //    var mapper = config.CreateMapper();
-
-        //    var controller = new AllPlayersController(playersRepositoryStub.Object, teamsRepositoryStub.Object, mapper,
-        //        leagueRepositoryStub.Object, uriStub.Object, technicalRepositoryStub.Object, mentalRepositoryStub.Object,
-        //        physicalRepositoryStub.Object, goalkeepingRepositoryStub.Object);
-
-        //    var result = await controller.GetFieldPlayerStats(random.Next(10));
-
-        //    //var resultObject = GetObjectResultContent<Response<PlayerDto>>(result);
-
-        //    //result.Result.Should().BeEquivalentTo(expectedItem, options => options.ComparingByMembers<PlayerDto>().ExcludingMissingMembers());
-        //}
-
         private Player CreateRandomPlayer()
         {
             return new()
@@ -150,77 +118,6 @@ namespace UnitTests
                 Mental = new Mental(),
                 Physical = new Physical(),
                 Goalkeeping = new Goalkeeping()
-            };
-        }
-
-        private Technical createTechnicals()
-        {
-            return new()
-            {
-                Id = random.Next(10),
-                Corners = random.Next(10),
-                Crossing = random.Next(10),
-                Dribbling = random.Next(10),
-                Finishing = random.Next(10),
-                FirstTouch = random.Next(10),
-                FreeKickTaking = random.Next(10),
-                Heading = random.Next(10),
-                LongShots = random.Next(10),
-                LongThrows = random.Next(10),
-                Marking = random.Next(10),
-                Passing = random.Next(10),
-                PenaltyTaking = random.Next(10),
-                Tackling = random.Next(10),
-                Technique = random.Next(10),
-                PlayerId = random.Next(10),
-                Player = new Player(),
-                FieldStats = new FieldStats()
-            };
-        }
-
-        private Mental createMentals()
-        {
-            return new()
-            {
-                Id = random.Next(10),
-                Aggression = random.Next(10),
-                Anticipation = random.Next(10),
-                Bravery = random.Next(10),
-                Composure = random.Next(10),
-                Concentration = random.Next(10),
-                Decisions = random.Next(10),
-                Determination = random.Next(10),
-                Flair = random.Next(10),
-                Leadership = random.Next(10),
-                OffTheBall = random.Next(10),
-                Positioning = random.Next(10),
-                Teamwork = random.Next(10),
-                Vision = random.Next(10),
-                WorkRate = random.Next(10),
-                PlayerId = random.Next(10),
-                Player = new Player(),
-                FieldStats = new FieldStats(),
-                GoalStats = new GoalStats()
-            };
-        }
-
-        private Physical createPhysicals()
-        {
-            return new()
-            {
-                Id = random.Next(10),
-                Acceleration = random.Next(10),
-                Agility = random.Next(10),
-                Balance = random.Next(10),
-                JumpingReach = random.Next(10),
-                NaturalFitness = random.Next(10),
-                Pace = random.Next(10),
-                Stamina = random.Next(10),
-                Strength = random.Next(10),
-                PlayerId = random.Next(10),
-                Player = new Player(),
-                FieldStats = new FieldStats(),
-                GoalStats = new GoalStats()
             };
         }
 
