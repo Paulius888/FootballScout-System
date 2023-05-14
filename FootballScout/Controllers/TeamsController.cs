@@ -43,7 +43,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpGet("{teamId}")]
-        public async Task<ActionResult<TeamDto>> Get(int leagueId, int teamId)
+        public async Task<ActionResult<Response<TeamDto>>> Get(int leagueId, int teamId)
         {
             var team = await _teamsRepository.Get(leagueId, teamId);
 
@@ -54,7 +54,7 @@ namespace FootballScout.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<TeamDto>> Add (int leagueId, CreateTeamDto teamDto)
+        public async Task<ActionResult<Response<TeamDto>>> Add (int leagueId, CreateTeamDto teamDto)
         {
             var league = await _leaguesRepository.Get(leagueId);
             if (league == null) return NotFound($"Could not find a league with this id {leagueId}");
@@ -70,7 +70,7 @@ namespace FootballScout.Controllers
 
         [HttpPut("{teamId}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<TeamDto>> Put(int leagueId, int teamId, UpdateTeamDto teamDto)
+        public async Task<ActionResult<Response<TeamDto>>> Put(int leagueId, int teamId, UpdateTeamDto teamDto)
         {
             var league = await _leaguesRepository.Get(leagueId);
             if (league == null) return NotFound($"Could not find a league with this id {leagueId}");

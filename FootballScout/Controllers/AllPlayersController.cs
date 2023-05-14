@@ -62,7 +62,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpGet("api/players/{playerId}")]
-        public async Task<ActionResult<PlayerDto>> Get(int playerId)
+        public async Task<ActionResult<Response<PlayerDto>>> Get(int playerId)
         {
             var player = await _playersRepository.Get(playerId);
 

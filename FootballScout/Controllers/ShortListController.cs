@@ -49,7 +49,7 @@ namespace FootballScout.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin, Scout")]
-        public async Task<ActionResult<ShortListDto>> Add(string userId, CreateShortListDto shortListDto)
+        public async Task<ActionResult<Response<ShortListDto>>> Add(string userId, CreateShortListDto shortListDto)
         {
             var user = await _restUsersRepository.Get(userId);
             if (user == null) return NotFound($"Could not find a user with this name {userId}");
@@ -64,7 +64,7 @@ namespace FootballScout.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin, Scout")]
-        public async Task<ActionResult<ShortListDto>> Update(int id, UpdateShortListDto shortListDto)
+        public async Task<ActionResult<Response<ShortListDto>>> Update(int id, UpdateShortListDto shortListDto)
         {
             var shortList = await _shortListsRepository.Get(id);
             if (shortList == null) return NotFound($"ShortList with id '{id}' not found");

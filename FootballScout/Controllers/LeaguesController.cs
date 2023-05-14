@@ -40,7 +40,7 @@ namespace FootballScout.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<LeagueDto>> Get(int id)
+        public async Task<ActionResult<Response<LeagueDto>>> Get(int id)
         {
             var league = await _leaguesRepository.Get(id);
             if (league == null) return NotFound($"League'{id}' not found");
@@ -50,7 +50,7 @@ namespace FootballScout.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<LeagueDto>> Post(CreateLeagueDto leagueDto)
+        public async Task<ActionResult<Response<LeagueDto>>> Post(CreateLeagueDto leagueDto)
         {
             var league = _mapper.Map<League>(leagueDto);
 
@@ -61,7 +61,7 @@ namespace FootballScout.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<LeagueDto>> Put(int id, UpdateLeagueDto leagueDto)
+        public async Task<ActionResult<Response<LeagueDto>>> Put(int id, UpdateLeagueDto leagueDto)
         {
             var league = await _leaguesRepository.Get(id);
             if (league == null) return NotFound($"League with id '{id}' not found");
@@ -75,7 +75,7 @@ namespace FootballScout.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<LeagueDto>> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             var league = await _leaguesRepository.Get(id);
             if (league == null) return NotFound($"League with id '{id}' not found");

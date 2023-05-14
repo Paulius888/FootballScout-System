@@ -18,8 +18,7 @@ namespace FootballScout.Controllers
         private readonly ITechnicalsRepository _technicalsRepository;
         private readonly IMapper _mapper;
 
-        public TechnicalsController(IPlayersRepository playersRepository, ITeamsRepository teamsRepository,
-            IMapper mapper, ILeaguesRepository leaguesRepository, ITechnicalsRepository technicalsRepository)
+        public TechnicalsController(IPlayersRepository playersRepository, IMapper mapper, ITechnicalsRepository technicalsRepository)
         {
             _mapper = mapper;
             _playersRepository = playersRepository;
