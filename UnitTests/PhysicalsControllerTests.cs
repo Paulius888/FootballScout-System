@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentAssertions;
 using FootballScout.Controllers;
 using FootballScout.Data;
 using FootballScout.Data.Dtos.Physicals;
-using FootballScout.Data.Dtos.Teams;
-using FootballScout.Data.Dtos.Technicals;
 using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.Physicals;
 using FootballScout.Data.Repositories.Players;
-using FootballScout.Data.Repositories.Technicals;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 

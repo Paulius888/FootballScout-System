@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using FootballScout.Data.Dtos.Mentals;
-using FootballScout.Data.Dtos.Technicals;
 using FootballScout.Data.Entities;
-using FootballScout.Data.Repositories.Leagues;
 using FootballScout.Data.Repositories.Mentals;
 using FootballScout.Data.Repositories.Players;
-using FootballScout.Data.Repositories.Teams;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -7,7 +7,6 @@ using FootballScout.Data.Repositories.ListedPlayers;
 using FootballScout.Data.Repositories.Players;
 using FootballScout.Data.Repositories.RestUsers;
 using FootballScout.Data.Repositories.ShortLists;
-using FootballScout.Migrations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

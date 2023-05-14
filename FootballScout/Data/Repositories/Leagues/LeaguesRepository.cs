@@ -1,6 +1,5 @@
 ﻿using FootballScout.Data.Entities;
 using FootballScout.Filter;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootballScout.Data.Repositories.Leagues

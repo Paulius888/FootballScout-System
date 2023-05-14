@@ -1,5 +1,4 @@
-﻿using System.Reflection.Emit;
-using FootballScout.Data.Entities;
+﻿using FootballScout.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

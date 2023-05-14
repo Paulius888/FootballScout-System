@@ -1,5 +1,4 @@
 ﻿using FootballScout.Data.Entities;
-using FootballScout.Migrations;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootballScout.Data.Repositories.ListedPlayers

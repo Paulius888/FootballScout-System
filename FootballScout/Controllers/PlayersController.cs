@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using FootballScout.Authentication.Model;
 using FootballScout.Data.Dtos.Players;
-using FootballScout.Data.Dtos.Teams;
 using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.Leagues;
 using FootballScout.Data.Repositories.Players;

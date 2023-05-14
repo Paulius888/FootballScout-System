@@ -1,9 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using AutoMapper;
-using FootballScout.Data.Dtos.Leagues;
-using FootballScout.Data.Dtos.Players;
+﻿using AutoMapper;
 using FootballScout.Data.Dtos.ShortList;
-using FootballScout.Data.Dtos.Teams;
 using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.RestUsers;
 using FootballScout.Data.Repositories.ShortLists;

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Numerics;
-using AutoMapper;
+﻿using AutoMapper;
 using FootballScout.Data.Dtos.FieldStats;
 using FootballScout.Data.Dtos.GoalStats;
 using FootballScout.Data.Dtos.Players;
-using FootballScout.Data.Dtos.Teams;
 using FootballScout.Data.Entities;
 using FootballScout.Data.Repositories.GoalKeeping;
 using FootballScout.Data.Repositories.Leagues;
