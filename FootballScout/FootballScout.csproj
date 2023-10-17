@@ -26,4 +26,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\eidim\source\repos\FootballScout\FootballScout\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\eidim\source\repos\FootballScout\FootballScout\.editorconfig" />
+  </ItemGroup>
+
 </Project>
